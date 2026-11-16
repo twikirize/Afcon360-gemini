@@ -1,0 +1,71 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div style="margin-bottom: 14px;">
+    <a href="/events" class="btn btn-outline"><i class="fa-solid fa-arrow-left"></i> Back to Events</a>
+  </div>
+
+  <div class="grid-2">
+    <section class="card">
+      <div class="card-meta">
+        <span class="tag"><%= event.category %></span>
+        <span><%= event.city %>, <%= event.country %></span>
+      </div>
+      <h1 style="margin:0; font-family: var(--font-heading); font-size: 1.8rem;"><%= event.name %></h1>
+      <p style="font-size:1rem;"><%= event.description %></p>
+      <div style="padding:14px; background: var(--bg-surface-alt); border-radius: var(--radius-md); font-size:0.9rem;">
+        <div><strong>Dates:</strong> <%= event.startDate %><%= event.endDate && event.endDate !== event.startDate ? ' → ' + event.endDate : '' %></div>
+        <div><strong>Venue:</strong> <%= event.venue %></div>
+        <div><strong>Organizer:</strong> <%= event.organizer %></div>
+      </div>
+
+      <% if (nearbyProperties.length > 0) { %>
+        <div style="margin-top:8px;">
+          <h3 style="margin:0 0 8px;">Nearby Stays in <%= event.city %></h3>
+          <% nearbyProperties.forEach(function(prop) { %>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid var(--border-light);">
+              <div>
+                <strong><%= prop.name %></strong>
+                <div style="font-size:0.82rem; color: var(--text-muted);"><%= prop.currency %> <%= prop.pricePerNight.toLocaleString() %> / night</div>
+              </div>
+              <a href="/accommodation?city=<%= encodeURIComponent(event.city) %>" class="btn btn-outline">Book Stay</a>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </section>
+
+    <section class="card">
+      <h2 style="margin:0; font-family: var(--font-heading);">Register &amp; Select Tickets</h2>
+      <form class="form-stack" action="/events/<%= event.slug %>/register" method="post">
+        <div class="field">
+          <label for="ticketTypeId">Ticket Tier</label>
+          <select id="ticketTypeId" name="ticketTypeId" class="select">
+            <% event.ticketTypes.forEach(function(t) { %>
+              <option value="<%= t.id %>">
+                <%= t.name %> — <%= t.currency %> <%= t.price.toLocaleString() %> (<%= t.available %> left)
+              </option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="field">
+          <label for="quantity">Quantity</label>
+          <input id="quantity" name="quantity" type="number" min="1" max="10" value="1" class="input" required>
+        </div>
+        <div class="field">
+          <label for="attendeeName">Attendee Full Name</label>
+          <input id="attendeeName" name="attendeeName" type="text" class="input" value="<%= currentUser ? currentUser.fullName : 'Amina Namukasa' %>" required>
+        </div>
+        <div class="field">
+          <label for="attendeeEmail">Attendee Email</label>
+          <input id="attendeeEmail" name="attendeeEmail" type="email" class="input" value="<%= currentUser ? currentUser.email : 'amina@pamoja.space' %>" required>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-ticket"></i> Confirm Registration
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2>Stays &amp; Accommodation</h2>
+      <p style="margin:4px 0 0; color: var(--text-muted);">Verified hotels, serviced apartments, lodges, and heritage riads</p>
+    </div>
+  </div>
+
+  <section class="top-search">
+    <form class="search-form" action="/accommodation" method="get">
+      <input type="text" name="city" class="input" value="<%= cityFilter %>" placeholder="Filter by city (Kampala, Nairobi, Entebbe, Zanzibar)...">
+      <button type="submit" class="btn btn-primary">Search Stays</button>
+      <a href="/accommodation" class="btn btn-outline">Show All</a>
+    </form>
+  </section>
+
+  <div class="grid-cards" style="margin-bottom: 32px;">
+    <% properties.forEach(function(prop) { %>
+      <article class="card">
+        <div class="card-meta">
+          <span class="tag"><%= prop.propertyType.toUpperCase() %></span>
+          <span>★ <%= prop.rating %> · <%= prop.availableRooms %> rooms left</span>
+        </div>
+        <h3><%= prop.name %></h3>
+        <div style="font-size:0.86rem; color: var(--text-muted);">
+          <i class="fa-solid fa-location-dot"></i> <%= prop.city %>, <%= prop.country %>
+        </div>
+        <p><%= prop.description %></p>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <% prop.amenities.forEach(function(am) { %>
+            <span class="tag" style="background: var(--bg-surface-alt); border: 1px solid var(--border-light);"><%= am %></span>
+          <% }); %>
+        </div>
+
+        <form class="form-stack" action="/accommodation/book" method="post" style="margin-top:8px; padding-top:10px; border-top:1px solid var(--border-light);">
+          <input type="hidden" name="propertyId" value="<%= prop.id %>">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div class="field">
+              <label>Check-in</label>
+              <input type="date" name="checkIn" value="2027-06-14" class="input" required>
+            </div>
+            <div class="field">
+              <label>Nights</label>
+              <input type="number" name="nights" min="1" max="30" value="2" class="input" required>
+            </div>
+          </div>
+          <div class="card-footer" style="border-top:none; padding-top:0;">
+            <span class="price-text"><%= prop.currency %> <%= prop.pricePerNight.toLocaleString() %> / night</span>
+            <button type="submit" class="btn btn-primary" <%= prop.availableRooms < 1 ? 'disabled' : '' %>>
+              <%= prop.availableRooms < 1 ? 'Sold Out' : 'Book Stay' %>
+            </button>
+          </div>
+        </form>
+      </article>
+    <% }); %>
+  </div>
+
+  <% if (bookings.length > 0) { %>
+    <section class="card">
+      <h3 style="margin:0 0 10px;">Recent Stay Bookings</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Property</th>
+              <th>City</th>
+              <th>Check-in</th>
+              <th>Nights</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookings.forEach(function(b) { %>
+              <tr>
+                <td style="font-family:var(--font-mono);"><%= b.ref %></td>
+                <td><%= b.propertyName %></td>
+                <td><%= b.city %></td>
+                <td><%= b.checkIn %></td>
+                <td><%= b.nights %></td>
+                <td class="price-text"><%= b.currency %> <%= b.totalAmount.toLocaleString() %></td>
+                <td><span class="tag"><%= b.status %></span></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

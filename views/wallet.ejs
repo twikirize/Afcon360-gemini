@@ -1,0 +1,94 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2>Multi-Currency Wallet</h2>
+      <p style="margin:4px 0 0; color: var(--text-muted);">Account: <code><%= account.accountName %></code> · KYC Tier <%= account.kycTier %></p>
+    </div>
+    <span class="tag"><%= account.status %></span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Available Balance</div>
+      <div class="kpi-value"><%= account.currency %> <%= account.balance.toLocaleString() %></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Daily Transaction Limit</div>
+      <div class="kpi-value"><%= account.currency %> <%= account.dailyLimit.toLocaleString() %></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Recent Ledger Entries</div>
+      <div class="kpi-value"><%= transactions.length %></div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom: 24px;">
+    <section class="card">
+      <h3 style="margin:0;">Deposit Funds</h3>
+      <form class="form-stack" action="/wallet/deposit" method="post">
+        <div class="field">
+          <label for="depSource">Funding Source</label>
+          <select id="depSource" name="source" class="select">
+            <option value="mobile_money">Mobile Money (MTN / Airtel)</option>
+            <option value="flutterwave">Flutterwave Checkout</option>
+            <option value="agent">Authorized Pamoja Agent</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="depAmount">Amount (<%= account.currency %>)</label>
+          <input id="depAmount" name="amount" type="number" min="100" step="100" value="50000" class="input" required>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> Add Funds</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3 style="margin:0;">Send / Pay</h3>
+      <form class="form-stack" action="/wallet/send" method="post">
+        <div class="field">
+          <label for="recipient">Recipient Name or Account</label>
+          <input id="recipient" name="recipient" type="text" class="input" placeholder="e.g. john@driver.com or STAY-PAM-3102" required>
+        </div>
+        <div class="field">
+          <label for="sendAmount">Amount (<%= account.currency %>)</label>
+          <input id="sendAmount" name="amount" type="number" min="100" step="100" value="25000" class="input" required>
+        </div>
+        <button type="submit" class="btn btn-outline"><i class="fa-solid fa-paper-plane"></i> Send Payment</button>
+      </form>
+    </section>
+  </div>
+
+  <section class="card">
+    <h3 style="margin:0 0 10px;">Ledger History</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Reference</th>
+            <th>Type</th>
+            <th>Counterparty / Source</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% transactions.forEach(function(tx) { %>
+            <tr>
+              <td style="font-family:var(--font-mono);"><%= tx.reference %></td>
+              <td><%= tx.type %></td>
+              <td><%= tx.sourceOrRecipient %></td>
+              <td class="price-text" style="color: <%= tx.amount >= 0 ? 'var(--success)' : 'var(--danger)' %>;">
+                <%= tx.amount >= 0 ? '+' : '' %><%= tx.currency %> <%= tx.amount.toLocaleString() %>
+              </td>
+              <td><span class="tag"><%= tx.status %></span></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

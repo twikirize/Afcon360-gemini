@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Pamoja",
+    "slug": "pamoja-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "pamoja",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#1a3a1a",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "space.pamoja.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Pamoja uses your location to show nearby pickup points, events, and stays."
+      }
+    },
+    "android": {
+      "package": "space.pamoja.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#2d5a2d"
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
+  }
+}

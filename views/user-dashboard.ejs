@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2>Welcome back, <%= profile.fullName %></h2>
+      <p style="margin:4px 0 0; color: var(--text-muted);"><%= profile.email %> · KYC Tier <%= profile.kycTier %> · Country: <%= profile.country %></p>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <a href="/wallet" class="btn btn-primary"><i class="fa-solid fa-wallet"></i> Open Wallet</a>
+      <a href="/events" class="btn btn-outline">Browse Events</a>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Wallet Balance</div>
+      <div class="kpi-value"><%= wallet.currency %> <%= wallet.balance.toLocaleString() %></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Event Passes</div>
+      <div class="kpi-value"><%= registrations.length %></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Stay Bookings</div>
+      <div class="kpi-value"><%= bookings.length %></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Transport Rides</div>
+      <div class="kpi-value"><%= rides.length %></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <section class="card">
+      <h3 style="margin:0 0 8px;">My Event Registrations</h3>
+      <% if (registrations.length === 0) { %>
+        <p>No registrations yet. <a href="/events" style="color:var(--brand-primary); font-weight:600;">Explore events</a></p>
+      <% } else { %>
+        <% registrations.forEach(function(r) { %>
+          <div style="padding:10px 0; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; gap:10px;">
+            <div>
+              <strong><%= r.eventName %></strong>
+              <div style="font-size:0.84rem; color:var(--text-muted);"><%= r.quantity %>x <%= r.ticketTypeName %> · <%= r.ref %></div>
+            </div>
+            <span class="tag"><%= r.status %></span>
+          </div>
+        <% }); %>
+      <% } %>
+    </section>
+
+    <section class="card">
+      <h3 style="margin:0 0 8px;">My Stays &amp; Rides</h3>
+      <% bookings.forEach(function(b) { %>
+        <div style="padding:10px 0; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; gap:10px;">
+          <div>
+            <strong><%= b.propertyName %></strong>
+            <div style="font-size:0.84rem; color:var(--text-muted);"><%= b.city %> · <%= b.checkIn %> (<%= b.nights %> nights)</div>
+          </div>
+          <span class="tag"><%= b.ref %></span>
+        </div>
+      <% }); %>
+      <% rides.forEach(function(ride) { %>
+        <div style="padding:10px 0; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; gap:10px;">
+          <div>
+            <strong><%= ride.pickup %> → <%= ride.dropoff %></strong>
+            <div style="font-size:0.84rem; color:var(--text-muted);">Driver: <%= ride.driverName %></div>
+          </div>
+          <span class="tag tag-gold"><%= ride.status %></span>
+        </div>
+      <% }); %>
+    </section>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

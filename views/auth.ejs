@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+
+<div class="container" style="max-width:520px;">
+  <section class="card">
+    <h1 style="margin:0 0 6px; font-family: var(--font-heading);">
+      <%= mode === 'register' ? 'Create Your Pamoja Account' : 'Sign In to Pamoja' %>
+    </h1>
+    <p style="margin-bottom:12px;">
+      <% if (mode === 'login') { %>
+        Demo accounts: <code>amina@pamoja.space</code> / <code>Pamoja2027!</code> or Driver <code>john@driver.com</code> / <code>Driver2027!</code>
+      <% } else { %>
+        One canonical identity across Events, Stays, Transport, Tourism, and Wallet.
+      <% } %>
+    </p>
+
+    <% if (mode === 'login') { %>
+      <form class="form-stack" action="/auth/login" method="post">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" name="email" type="email" class="input" value="amina@pamoja.space" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" class="input" value="Pamoja2027!" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
+      <p style="margin-top:12px; font-size:0.9rem;">
+        New to Pamoja? <a href="/auth/register" style="color:var(--brand-primary); font-weight:700;">Create an account</a>
+      </p>
+    <% } else { %>
+      <form class="form-stack" action="/auth/register" method="post">
+        <div class="field">
+          <label for="fullName">Full Name</label>
+          <input id="fullName" name="fullName" type="text" class="input" required>
+        </div>
+        <div class="field">
+          <label for="regEmail">Email Address</label>
+          <input id="regEmail" name="email" type="email" class="input" required>
+        </div>
+        <div class="field">
+          <label for="country">Country</label>
+          <select id="country" name="country" class="select">
+            <option value="UG">Uganda (UGX)</option>
+            <option value="KE">Kenya (KES)</option>
+            <option value="TZ">Tanzania (TZS)</option>
+            <option value="NG">Nigeria (NGN)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="regPassword">Password (6+ characters)</label>
+          <input id="regPassword" name="password" type="password" class="input" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+      <p style="margin-top:12px; font-size:0.9rem;">
+        Already registered? <a href="/auth/login" style="color:var(--brand-primary); font-weight:700;">Sign in</a>
+      </p>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

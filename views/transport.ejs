@@ -1,0 +1,87 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2>Transport &amp; Ride Dispatch</h2>
+      <p style="margin:4px 0 0; color: var(--text-muted);">Scheduled airport shuttles and on-demand verified drivers</p>
+    </div>
+    <a href="/transport/driver" class="btn btn-accent">
+      <i class="fa-solid fa-van-shuttle"></i> Open Driver Dashboard
+    </a>
+  </div>
+
+  <div class="grid-2" style="margin-bottom: 24px;">
+    <section class="card">
+      <h3 style="margin:0;">Request a Ride</h3>
+      <p>Driver status: <strong style="color: <%= driverOnline ? 'var(--success)' : 'var(--warning)' %>;"><%= driverOnline ? 'Drivers Online' : 'Offline — Queue Mode' %></strong></p>
+      <form class="form-stack" action="/transport/ride-request" method="post">
+        <div class="field">
+          <label for="pickup">Pickup Location</label>
+          <input id="pickup" name="pickup" type="text" class="input" placeholder="e.g. Entebbe Airport Arrivals" required>
+        </div>
+        <div class="field">
+          <label for="dropoff">Dropoff Destination</label>
+          <input id="dropoff" name="dropoff" type="text" class="input" placeholder="e.g. Kololo Hills Boutique Hotel" required>
+        </div>
+        <div class="field">
+          <label for="serviceType">Service Class</label>
+          <select id="serviceType" name="serviceType" class="select">
+            <option value="standard">Standard Sedan (UGX 38,000 est.)</option>
+            <option value="executive">Executive Van (UGX 65,000 est.)</option>
+            <option value="shuttle">Shared Shuttle (UGX 25,000 est.)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-car-side"></i> Dispatch Ride</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3 style="margin:0 0 8px;">Scheduled Corridor Routes</h3>
+      <div class="form-stack">
+        <% routes.forEach(function(r) { %>
+          <div style="padding:12px; border:1px solid var(--border-light); border-radius: var(--radius-md); background: var(--bg-surface-alt);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="tag"><%= r.code %></span>
+              <span class="price-text"><%= r.currency %> <%= r.baseFare.toLocaleString() %></span>
+            </div>
+            <div style="font-weight:700; margin-top:6px;"><%= r.origin %> → <%= r.destination %></div>
+            <div style="font-size:0.84rem; color: var(--text-muted);"><%= r.vehicleClass %> · <%= r.estimatedMinutes %> min · <%= r.nextDeparture %></div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h3 style="margin:0 0 10px;">Active Ride Requests</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Route</th>
+            <th>Class</th>
+            <th>Driver</th>
+            <th>Fare Est.</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% rideRequests.forEach(function(ride) { %>
+            <tr>
+              <td style="font-family:var(--font-mono);"><%= ride.ref %></td>
+              <td><%= ride.pickup %> → <%= ride.dropoff %></td>
+              <td><%= ride.serviceType %></td>
+              <td><%= ride.driverName %></td>
+              <td class="price-text"><%= ride.currency %> <%= ride.estimatedFare.toLocaleString() %></td>
+              <td><span class="tag"><%= ride.status %></span></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

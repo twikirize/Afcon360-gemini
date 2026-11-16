@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2>Events &amp; Ticketing</h2>
+      <p style="margin:4px 0 0; color: var(--text-muted);">Published conferences, cultural festivals, and athletic fixtures</p>
+    </div>
+  </div>
+
+  <section class="top-search">
+    <form class="search-form" action="/events" method="get">
+      <input type="search" name="q" class="input" value="<%= query %>" placeholder="Filter by event title or category...">
+      <input type="text" name="city" class="input" style="max-width:220px;" value="<%= city %>" placeholder="City (e.g. Kampala)">
+      <button type="submit" class="btn btn-primary">Filter Events</button>
+      <a href="/events" class="btn btn-outline">Reset</a>
+    </form>
+  </section>
+
+  <div class="grid-cards">
+    <% events.forEach(function(evt) { %>
+      <article class="card">
+        <div class="card-meta">
+          <span class="tag"><%= evt.category %></span>
+          <span><%= evt.city %></span>
+        </div>
+        <h3><%= evt.name %></h3>
+        <p><%= evt.description %></p>
+        <div style="font-size:0.84rem; color: var(--text-muted);">
+          <div><i class="fa-solid fa-calendar"></i> <%= evt.startDate %><%= evt.endDate && evt.endDate !== evt.startDate ? ' to ' + evt.endDate : '' %></div>
+          <div><i class="fa-solid fa-location-dot"></i> <%= evt.venue %></div>
+        </div>
+        <div class="card-footer">
+          <span class="price-text">From <%= evt.ticketTypes[0].currency %> <%= evt.ticketTypes[0].price.toLocaleString() %></span>
+          <a href="/events/<%= evt.slug %>" class="btn btn-primary">View &amp; Register</a>
+        </div>
+      </article>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

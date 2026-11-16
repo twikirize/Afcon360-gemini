@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pamoja React Native User App (iOS &amp; Android)</title>
+  <meta name="description" content="Download the Pamoja React Native User App (iOS &amp; Android), run with Expo Go, build EAS binaries, and browse source files.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/mobile-studio.css">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="breadcrumb" id="getAppBreadcrumb" aria-label="Breadcrumb">
+      <a href="/" class="brand-wordmark">Pamoja</a>
+      <span class="crumb-sep" aria-hidden="true">/</span>
+      <a href="/" class="crumb-link">Home</a>
+      <span class="crumb-sep" aria-hidden="true">/</span>
+      <button type="button" class="crumb-menu-trigger" onclick="toggleGetAppMenu(event)">
+        <span id="getAppCrumbSection">Get Mobile App</span>
+        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+      </button>
+    </nav>
+    <button
+      type="button"
+      class="menu-toggle-btn"
+      id="getAppMenuBtn"
+      aria-expanded="false"
+      aria-controls="getAppMenuDropdown"
+      onclick="toggleGetAppMenu(event)"
+    >
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      <span>Menu</span>
+    </button>
+  </header>
+
+  <div class="crumb-dropdown" id="getAppMenuDropdown" role="menu" aria-label="Page navigation menu">
+    <a href="/" class="crumb-dropdown-item"><i class="fa-solid fa-house"></i><span>Pamoja Home</span></a>
+    <div class="crumb-dropdown-divider" role="separator"></div>
+    <button type="button" class="crumb-dropdown-item active" data-crumb-view="getapp" onclick="selectStudioMenu('getapp')"><i class="fa-solid fa-mobile-screen-button"></i><span>Get App (iOS &amp; Android)</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-view="code" onclick="selectStudioMenu('code')"><i class="fa-solid fa-code"></i><span>React Native Code</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-view="api" onclick="selectStudioMenu('api')"><i class="fa-solid fa-server"></i><span>Backend API Map</span></button>
+    <div class="crumb-dropdown-divider" role="separator"></div>
+    <a href="/api/mobile-app/download.zip" class="crumb-dropdown-item"><i class="fa-solid fa-download"></i><span>Download .zip</span></a>
+  </div>
+
+  <main class="page-shell">
+    <section class="studio-panel" aria-label="Pamoja React Native User App distribution and source">
+      <div class="studio-head">
+        <div>
+          <h1>Pamoja React Native User App (iOS &amp; Android)</h1>
+          <p>
+            Expo SDK 52 · TypeScript · React Navigation · SecureStore Bearer Auth — built to plug directly into your Pamoja Flask backend.
+          </p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="/api/mobile-app/download.zip" class="m-btn">
+            <i class="fa-solid fa-file-zipper"></i> Download .zip
+          </a>
+          <a href="/api/mobile-app/download" class="m-btn m-btn-outline">
+            Download .tar.gz
+          </a>
+        </div>
+      </div>
+
+      <div class="studio-tabs" role="tablist" aria-label="React Native app sections">
+        <button type="button" class="studio-tab active" data-studio-view="getapp">Get App (iOS &amp; Android)</button>
+        <button type="button" class="studio-tab" data-studio-view="code">React Native Code</button>
+        <button type="button" class="studio-tab" data-studio-view="api">Backend API Map</button>
+      </div>
+
+      <div id="view-getapp" class="api-table">
+        <div class="m-card" style="background:var(--surface-alt);">
+          <h3>1. Download the React Native Project</h3>
+          <p>
+            All source files for both iOS and Android live in <code>/mobile-app</code>. Click <strong>Download .zip</strong> above (or <code>.tar.gz</code>) to save the complete React Native project to your computer.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="/api/mobile-app/download.zip" class="m-btn">
+              Download pamoja-react-native-app.zip
+            </a>
+            <button type="button" class="m-btn m-btn-outline" onclick="switchStudioView('code')">
+              Browse Source Files
+            </button>
+          </div>
+        </div>
+
+        <div class="m-card">
+          <h3>2. Run on Your Phone Right Now (iOS &amp; Android via Expo Go)</h3>
+          <p>Extract the downloaded zip, point <code>EXPO_PUBLIC_API_URL</code> to your Pamoja Flask backend, and start Expo:</p>
+          <pre class="code-block">cd mobile-app
+npm install
+EXPO_PUBLIC_API_URL=https://your-pamoja-backend.com npx expo start</pre>
+          <p style="margin-top:10px; margin-bottom:0;">
+            Scan the QR code with <strong>Expo Go</strong> on iPhone or Android, or press <code>i</code> for iOS Simulator / <code>a</code> for Android Emulator.
+          </p>
+        </div>
+
+        <div class="m-card">
+          <h3>3. Build Installable App Binaries (Android .apk / iOS .ipa)</h3>
+          <p>When you are ready to distribute or install directly on devices without Expo Go:</p>
+          <pre class="code-block">npm install -g eas-cli
+eas login
+eas build --platform android --profile preview   # Generates installable Android .apk
+eas build --platform ios                           # Generates iOS build for TestFlight / App Store</pre>
+        </div>
+
+        <div class="m-card" style="margin-bottom:0;">
+          <h3>4. Why Only the User App Is Included</h3>
+          <p style="margin-bottom:0;">
+            Web portals and admin/driver consoles are hidden. This app strictly ships the 7 customer tabs: <strong>Home</strong>, <strong>Events</strong>, <strong>Stays</strong>, <strong>Rides</strong>, <strong>Wallet</strong>, <strong>Account</strong>, and <strong>About</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div id="view-code" class="code-browser" style="display:none;">
+        <div class="file-list" id="fileList">Loading React Native project files...</div>
+        <div class="code-view">
+          <div class="code-view-bar">
+            <span id="activeFileName">mobile-app/App.tsx</span>
+            <button type="button" class="m-btn m-btn-outline" id="copyCodeBtn" style="min-height:32px; padding:0 12px; font-size:0.78rem;">
+              Copy File
+            </button>
+          </div>
+          <pre id="codeContent"></pre>
+        </div>
+      </div>
+
+      <div id="view-api" class="api-table" style="display:none;">
+        <p style="margin-top:0; color:var(--text-secondary);">
+          Set <code>EXPO_PUBLIC_API_URL</code> in <code>mobile-app/.env</code> to your existing Flask backend URL. The React Native client calls these user endpoints:
+        </p>
+        <div class="api-row"><span class="api-method">POST</span><span class="api-path">/api/auth/mobile/login</span><span>Bearer token authentication mapped to <code>app/auth/mobile_api.py</code></span></div>
+        <div class="api-row"><span class="api-method">POST</span><span class="api-path">/api/auth/mobile/register</span><span>User onboarding &amp; wallet provisioning</span></div>
+        <div class="api-row"><span class="api-method">GET</span><span class="api-path">/api/auth/mobile/me</span><span>Active user profile &amp; KYC tier</span></div>
+        <div class="api-row"><span class="api-method">GET</span><span class="api-path">/api/home/feed</span><span>Unified discovery feed (events, stays, routes, tourism)</span></div>
+        <div class="api-row"><span class="api-method">GET</span><span class="api-path">/api/events</span><span>Published event catalog and ticket tiers</span></div>
+        <div class="api-row"><span class="api-method">POST</span><span class="api-path">/api/events/:slug/register</span><span>Ticket selection and instant registration</span></div>
+        <div class="api-row"><span class="api-method">GET</span><span class="api-path">/api/accommodation/properties</span><span>City-filtered verified stays</span></div>
+        <div class="api-row"><span class="api-method">POST</span><span class="api-path">/api/accommodation/book</span><span>Stay reservation checkout</span></div>
+        <div class="api-row"><span class="api-method">GET</span><span class="api-path">/api/transport/routes</span><span>Scheduled corridor shuttles and active user rides</span></div>
+        <div class="api-row"><span class="api-method">POST</span><span class="api-path">/api/transport/ride-request</span><span>On-demand pickup &amp; dropoff dispatch</span></div>
+        <div class="api-row"><span class="api-method">GET</span><span class="api-path">/api/wallet</span><span>Multi-currency wallet balance &amp; ledger history</span></div>
+        <div class="api-row"><span class="api-method">POST</span><span class="api-path">/api/wallet/deposit</span><span>Mobile Money / Flutterwave / Agent top-up</span></div>
+        <div class="api-row" style="border-bottom:none;"><span class="api-method">POST</span><span class="api-path">/api/wallet/send</span><span>Peer or booking settlement transfer</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="subtle-footer">
+    <span>Pamoja React Native User App (iOS &amp; Android) · Expo SDK 52</span>
+    <a href="/">← Back to Pamoja Home Page</a>
+  </footer>
+
+  <script>
+    const studioState = {
+      files: [],
+      activeFile: null,
+    };
+
+    window.toggleGetAppMenu = function(evt) {
+      if (evt) evt.stopPropagation();
+      const menu = document.getElementById('getAppMenuDropdown');
+      const btn = document.getElementById('getAppMenuBtn');
+      if (!menu) return;
+      const isOpen = menu.classList.toggle('open');
+      if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    window.selectStudioMenu = function(view) {
+      const menu = document.getElementById('getAppMenuDropdown');
+      const btn = document.getElementById('getAppMenuBtn');
+      if (menu) menu.classList.remove('open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      switchStudioView(view);
+    };
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('getAppMenuDropdown');
+      const btn = document.getElementById('getAppMenuBtn');
+      if (!menu || !menu.classList.contains('open')) return;
+      if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
+        menu.classList.remove('open');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    window.switchStudioView = function(view) {
+      document.querySelectorAll('.studio-tab[data-studio-view]').forEach((b) => {
+        b.classList.toggle('active', b.dataset.studioView === view);
+      });
+      document.querySelectorAll('.crumb-dropdown-item[data-crumb-view]').forEach((b) => {
+        b.classList.toggle('active', b.dataset.crumbView === view);
+      });
+      document.getElementById('view-getapp').style.display = view === 'getapp' ? 'block' : 'none';
+      document.getElementById('view-code').style.display = view === 'code' ? 'grid' : 'none';
+      document.getElementById('view-api').style.display = view === 'api' ? 'block' : 'none';
+      const labels = {
+        getapp: 'Get Mobile App',
+        code: 'React Native Code',
+        api: 'Backend API Map',
+      };
+      const crumbEl = document.getElementById('getAppCrumbSection');
+      if (crumbEl) crumbEl.textContent = labels[view] || 'Get Mobile App';
+    };
+
+    document.querySelectorAll('.studio-tab[data-studio-view]').forEach((btn) => {
+      btn.addEventListener('click', () => switchStudioView(btn.dataset.studioView));
+    });
+
+    async function loadMobileSourceFiles() {
+      const r = await fetch('/api/mobile-app/files');
+      const res = await r.json();
+      studioState.files = res.files || [];
+      const list = document.getElementById('fileList');
+      list.innerHTML = '';
+      studioState.files.forEach((f, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'file-btn' + (f.path === 'App.tsx' || idx === 0 ? ' active' : '');
+        btn.textContent = f.path;
+        btn.addEventListener('click', () => selectFile(f.path));
+        list.appendChild(btn);
+      });
+      const initial = studioState.files.find((f) => f.path === 'App.tsx') || studioState.files[0];
+      if (initial) selectFile(initial.path);
+    }
+
+    function selectFile(filePath) {
+      const f = studioState.files.find((x) => x.path === filePath);
+      if (!f) return;
+      studioState.activeFile = f;
+      document.getElementById('activeFileName').textContent = 'mobile-app/' + f.path;
+      document.getElementById('codeContent').textContent = f.content;
+      document.querySelectorAll('.file-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.textContent === filePath);
+      });
+    }
+
+    document.getElementById('copyCodeBtn').addEventListener('click', async () => {
+      if (!studioState.activeFile) return;
+      await navigator.clipboard.writeText(studioState.activeFile.content);
+      const btn = document.getElementById('copyCodeBtn');
+      btn.textContent = 'Copied';
+      setTimeout(() => { btn.textContent = 'Copy File'; }, 1500);
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initialView = params.get('view');
+    if (initialView === 'code' || initialView === 'api' || initialView === 'getapp') {
+      switchStudioView(initialView);
+    }
+
+    loadMobileSourceFiles();
+  </script>
+</body>
+</html>

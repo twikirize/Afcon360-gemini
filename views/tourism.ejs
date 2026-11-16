@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2>Tourism &amp; Curated Experiences</h2>
+      <p style="margin:4px 0 0; color: var(--text-muted);">Regional wildlife drives, river expeditions, and cultural heritage walks</p>
+    </div>
+  </div>
+
+  <div class="grid-cards">
+    <% listings.forEach(function(item) { %>
+      <article class="card">
+        <div class="card-meta">
+          <span class="tag"><%= item.category %></span>
+          <span><%= item.duration %></span>
+        </div>
+        <h3><%= item.title %></h3>
+        <div style="font-size:0.86rem; color: var(--text-muted);">
+          <i class="fa-solid fa-location-dot"></i> <%= item.region %>, <%= item.country %>
+        </div>
+        <p><%= item.summary %></p>
+        <div class="card-footer">
+          <span class="price-text"><%= item.currency %> <%= item.price.toLocaleString() %></span>
+          <a href="/transport" class="btn btn-outline">Arrange Transfer</a>
+        </div>
+      </article>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

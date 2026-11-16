@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --brand-primary: #2d5a2d;
+      --brand-primary-dark: #1a3a1a;
+      --brand-accent: #ffcc00;
+      --green: #15803d;
+      --green-dim: #dcfce7;
+      --amber: #f59e0b;
+      --amber-dim: #fef3c7;
+      --blue: #2563eb;
+      --blue-dim: #dbeafe;
+      --red: #dc2626;
+      --bg-surface: #ffffff;
+      --bg-surface-alt: #f8faf8;
+      --bg-hover: #f0f4f0;
+      --text-primary: #1a1a1a;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --border-light: #e5e7eb;
+      --border-medium: #d1d5db;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 9999px;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-display: 'Syne', var(--font-sans);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font-sans); background: var(--bg-surface-alt); color: var(--text-primary); }
+    .dd-shell { display: grid; grid-template-columns: 270px 1fr; grid-template-rows: 64px 1fr; grid-template-areas: "pane topbar" "pane main"; min-height: 100vh; }
+    .dd-pane { grid-area: pane; background: var(--bg-surface); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; }
+    .dd-pane-header { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border-light); }
+    .dd-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--brand-primary); text-decoration: none; }
+    .dd-pane-nav { flex: 1; padding: 12px; }
+    .dd-pane-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--radius-lg); color: var(--text-secondary); text-decoration: none; font-weight: 500; margin-bottom: 4px; }
+    .dd-pane-item:hover { background: var(--bg-hover); color: var(--brand-primary); }
+    .dd-pane-item.active { background: var(--green-dim); color: var(--green); font-weight: 700; }
+    .dd-badge { margin-left: auto; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); background: var(--green-dim); color: var(--green); }
+    .dd-pane-footer { padding: 16px; border-top: 1px solid var(--border-light); display: flex; flex-direction: column; gap: 10px; }
+    .dd-driver-mini { display: flex; align-items: center; gap: 10px; }
+    .dd-mini-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-accent), var(--brand-primary)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; color: #fff; }
+    .dd-topbar { grid-area: topbar; background: var(--bg-surface); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; gap: 12px; }
+    .dd-hamburger { display: none; border: none; background: transparent; font-size: 1.25rem; cursor: pointer; padding: 8px; }
+    .dd-driver-code { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--brand-primary); background: var(--green-dim); padding: 4px 12px; border-radius: var(--radius-full); }
+    .dd-main { grid-area: main; padding: 24px; overflow-y: auto; }
+    .dd-panel { display: none; }
+    .dd-panel.active { display: block; }
+    .dd-hero { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 20px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); margin-bottom: 18px; }
+    .dd-hero-left { display: flex; align-items: center; gap: 16px; }
+    .dd-hero-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-accent), var(--brand-primary)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: #fff; }
+    .dd-card { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); margin-bottom: 18px; overflow: hidden; }
+    .dd-card-header { padding: 14px 20px; border-bottom: 1px solid var(--border-light); background: var(--bg-surface-alt); display: flex; align-items: center; justify-content: space-between; }
+    .dd-card-header h2 { margin: 0; font-family: var(--font-display); font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+    .dd-card-body { padding: 20px; }
+    .dd-checklist { list-style: none; padding: 0; margin: 0 0 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+    .dd-checklist li { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg-surface-alt); border-radius: var(--radius-lg); border-left: 3px solid var(--green); font-size: 0.9rem; font-weight: 600; }
+    .dd-checklist li i { color: var(--green); }
+    .dd-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    .dd-metric { padding: 16px; background: var(--bg-surface-alt); border-radius: var(--radius-lg); }
+    .dd-metric-value { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; }
+    .dd-metric-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
+    .dd-trip-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid var(--border-light); border-radius: var(--radius-lg); margin-bottom: 10px; }
+    .dd-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-lg); border: 1px solid transparent; font-weight: 600; cursor: pointer; text-decoration: none; font-family: var(--font-sans); }
+    .dd-btn-primary { background: var(--brand-primary); color: #fff; }
+    .dd-btn-warning { background: var(--amber); color: #1a1a1a; }
+    .dd-btn-outline { background: #fff; border-color: var(--border-medium); color: var(--text-secondary); }
+    .dd-dock { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 64px; background: var(--bg-surface); border-top: 1px solid var(--border-light); z-index: 90; }
+    .dd-dock-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 0.72rem; color: var(--text-muted); text-decoration: none; }
+    .dd-dock-item.active { color: var(--brand-primary); font-weight: 700; }
+    @media (max-width: 960px) {
+      .dd-shell { grid-template-columns: 1fr; grid-template-areas: "topbar" "main"; }
+      .dd-pane { display: none; position: fixed; inset: 0 auto 0 0; width: 270px; z-index: 100; }
+      .dd-pane.open { display: flex; }
+      .dd-hamburger { display: inline-flex; }
+      .dd-main { padding-bottom: 84px; }
+      .dd-dock { display: flex; }
+    }
+  </style>
+</head>
+<body>
+<div class="dd-shell">
+  <aside class="dd-pane" id="ddPane">
+    <div class="dd-pane-header">
+      <a href="/" class="dd-brand"><i class="fa-solid fa-bus"></i><span>Pamoja Driver</span></a>
+      <button class="dd-hamburger" id="ddClosePane" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <nav class="dd-pane-nav">
+      <a href="#" class="dd-pane-item active" data-panel="home"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#" class="dd-pane-item" data-panel="earnings"><i class="fa-solid fa-wallet"></i><span>Earnings</span><span class="dd-badge"><%= driver.earnings.currency %> <%= driver.earnings.today.toLocaleString() %></span></a>
+      <a href="#" class="dd-pane-item" data-panel="trips"><i class="fa-solid fa-route"></i><span>Trips</span></a>
+      <a href="#" class="dd-pane-item" data-panel="vehicle"><i class="fa-solid fa-van-shuttle"></i><span>Vehicle</span></a>
+      <a href="#" class="dd-pane-item" data-panel="account"><i class="fa-solid fa-user"></i><span>Account</span></a>
+    </nav>
+    <div class="dd-pane-footer">
+      <div class="dd-driver-mini">
+        <div class="dd-mini-avatar">JD</div>
+        <div>
+          <div style="font-weight:700; font-size:0.9rem;"><%= driver.name %></div>
+          <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);"><%= driver.driverCode %></div>
+        </div>
+      </div>
+      <a href="/transport" class="dd-btn dd-btn-outline"><i class="fa-solid fa-arrow-left"></i> Back to Transport</a>
+    </div>
+  </aside>
+
+  <header class="dd-topbar">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="dd-hamburger" id="ddOpenPane" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <strong>Driver Dispatch Workspace</strong>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="dd-driver-code"><%= driver.driverCode %></span>
+      <a href="/" class="dd-btn dd-btn-outline">Home</a>
+    </div>
+  </header>
+
+  <main class="dd-main">
+    <section class="dd-panel active" data-panel="home">
+      <div class="dd-hero">
+        <div class="dd-hero-left">
+          <div class="dd-hero-avatar">JD</div>
+          <div>
+            <h1 style="margin:0 0 4px; font-family:var(--font-display); font-size:1.4rem;"><%= driver.name %></h1>
+            <div style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="dd-badge"><%= driver.statusLabel %></span>
+              <span><i class="fa-solid fa-star" style="color:var(--amber);"></i> <%= driver.rating %></span>
+              <span><i class="fa-solid fa-van-shuttle"></i> <%= driver.vehicle.plate %></span>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted);">Dispatch Status</div>
+          <div id="ddOnlineLabel" style="font-weight:800; font-size:1.05rem; margin-bottom:6px;"><%= driver.isOnline ? 'Online' : 'Offline' %></div>
+          <button id="ddToggleOnlineBtn" class="dd-btn <%= driver.isOnline ? 'dd-btn-primary' : 'dd-btn-warning' %>">
+            <i class="fa-solid fa-power-off"></i>
+            <span><%= driver.isOnline ? 'Go Offline' : 'Go Online' %></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="dd-card">
+        <div class="dd-card-header">
+          <h2><i class="fa-solid fa-shield-check"></i> Go-Live Readiness Checklist</h2>
+          <span class="dd-badge">Ready</span>
+        </div>
+        <div class="dd-card-body">
+          <ul class="dd-checklist">
+            <li><i class="fa-solid fa-circle-check"></i> Active driver profile</li>
+            <li><i class="fa-solid fa-circle-check"></i> Identity verification (KYC)</li>
+            <li><i class="fa-solid fa-circle-check"></i> Not suspended or blocked</li>
+            <li><i class="fa-solid fa-circle-check"></i> Compliance approval</li>
+            <li><i class="fa-solid fa-circle-check"></i> Valid driver licence</li>
+            <li><i class="fa-solid fa-circle-check"></i> Assigned vehicle (<%= driver.vehicle.plate %>)</li>
+          </ul>
+          <div class="dd-metrics">
+            <div class="dd-metric">
+              <div class="dd-metric-label">Earnings / hr</div>
+              <div class="dd-metric-value"><%= driver.earnings.currency %> <%= driver.earnings.hourlyRate %></div>
+            </div>
+            <div class="dd-metric">
+              <div class="dd-metric-label">Daily Goal</div>
+              <div class="dd-metric-value"><%= driver.earnings.currency %> <%= driver.earnings.dailyGoal.toLocaleString() %></div>
+            </div>
+            <div class="dd-metric">
+              <div class="dd-metric-label">Today's Total</div>
+              <div class="dd-metric-value"><%= driver.earnings.currency %> <%= driver.earnings.today.toLocaleString() %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dd-panel" data-panel="earnings">
+      <div class="dd-card">
+        <div class="dd-card-header"><h2><i class="fa-solid fa-wallet"></i> Earnings Overview</h2></div>
+        <div class="dd-card-body">
+          <div class="dd-metrics">
+            <div class="dd-metric"><div class="dd-metric-label">Today</div><div class="dd-metric-value"><%= driver.earnings.currency %> <%= driver.earnings.today.toLocaleString() %></div></div>
+            <div class="dd-metric"><div class="dd-metric-label">This Week</div><div class="dd-metric-value"><%= driver.earnings.currency %> <%= driver.earnings.week.toLocaleString() %></div></div>
+            <div class="dd-metric"><div class="dd-metric-label">This Month</div><div class="dd-metric-value"><%= driver.earnings.currency %> <%= driver.earnings.month.toLocaleString() %></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dd-panel" data-panel="trips">
+      <div class="dd-card">
+        <div class="dd-card-header"><h2><i class="fa-solid fa-route"></i> Recent Completed Trips</h2></div>
+        <div class="dd-card-body">
+          <% driver.trips.forEach(function(trip) { %>
+            <div class="dd-trip-item">
+              <div>
+                <div style="font-weight:700;"><%= trip.route %></div>
+                <div style="font-size:0.82rem; color:var(--text-muted);"><%= trip.date %> · <%= trip.time %> · <%= trip.duration %> · <%= trip.distanceKm %> km</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:var(--font-mono); font-weight:700;"><%= driver.earnings.currency %> <%= trip.fare.toLocaleString() %></div>
+                <span class="dd-badge"><%= trip.status %></span>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+
+    <section class="dd-panel" data-panel="vehicle">
+      <div class="dd-card">
+        <div class="dd-card-header"><h2><i class="fa-solid fa-van-shuttle"></i> Assigned Vehicle</h2></div>
+        <div class="dd-card-body">
+          <h3 style="margin:0 0 6px;"><%= driver.vehicle.makeModel %></h3>
+          <p style="margin:0 0 12px; color:var(--text-muted);"><%= driver.vehicle.plate %> · <%= driver.vehicle.color %> · <%= driver.vehicle.year %></p>
+          <div class="dd-trip-item">
+            <div>
+              <strong>Insurance &amp; Compliance</strong>
+              <div style="font-size:0.82rem; color:var(--text-muted);">Expires <%= driver.vehicle.insuranceExpiry %></div>
+            </div>
+            <span class="dd-badge"><%= driver.vehicle.complianceStatus %></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dd-panel" data-panel="account">
+      <div class="dd-card">
+        <div class="dd-card-header"><h2><i class="fa-solid fa-user"></i> Driver Account</h2></div>
+        <div class="dd-card-body">
+          <p><strong>Name:</strong> <%= driver.name %></p>
+          <p><strong>Email:</strong> <%= driver.email %></p>
+          <p><strong>Phone:</strong> <%= driver.phone %></p>
+          <p><strong>Driver Code:</strong> <code><%= driver.driverCode %></code></p>
+          <p><strong>License:</strong> <%= driver.licenseNumber %></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="dd-dock">
+    <a href="#" class="dd-dock-item active" data-panel="home"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="#" class="dd-dock-item" data-panel="earnings"><i class="fa-solid fa-wallet"></i><span>Earn</span></a>
+    <a href="#" class="dd-dock-item" data-panel="trips"><i class="fa-solid fa-route"></i><span>Trips</span></a>
+    <a href="#" class="dd-dock-item" data-panel="vehicle"><i class="fa-solid fa-van-shuttle"></i><span>Vehicle</span></a>
+    <a href="#" class="dd-dock-item" data-panel="account"><i class="fa-solid fa-user"></i><span>Account</span></a>
+  </nav>
+</div>
+
+<script>
+  const pane = document.getElementById('ddPane');
+  const openBtn = document.getElementById('ddOpenPane');
+  const closeBtn = document.getElementById('ddClosePane');
+  if (openBtn) openBtn.addEventListener('click', () => pane.classList.add('open'));
+  if (closeBtn) closeBtn.addEventListener('click', () => pane.classList.remove('open'));
+
+  function showPanel(name) {
+    document.querySelectorAll('.dd-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === name));
+    document.querySelectorAll('[data-panel]').forEach(el => {
+      if (el.classList.contains('dd-pane-item') || el.classList.contains('dd-dock-item')) {
+        el.classList.toggle('active', el.dataset.panel === name);
+      }
+    });
+    pane.classList.remove('open');
+  }
+
+  document.querySelectorAll('.dd-pane-item[data-panel], .dd-dock-item[data-panel]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showPanel(btn.dataset.panel);
+    });
+  });
+
+  const toggleBtn = document.getElementById('ddToggleOnlineBtn');
+  const onlineLabel = document.getElementById('ddOnlineLabel');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', async () => {
+      const resp = await fetch('/api/transport/driver/toggle-online', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      });
+      const data = await resp.json();
+      const online = Boolean(data.isOnline);
+      onlineLabel.textContent = online ? 'Online' : 'Offline';
+      toggleBtn.className = 'dd-btn ' + (online ? 'dd-btn-primary' : 'dd-btn-warning');
+      toggleBtn.querySelector('span').textContent = online ? 'Go Offline' : 'Go Online';
+    });
+  }
+</script>
+</body>
+</html>

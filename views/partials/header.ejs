@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/pamoja.css">
+</head>
+<body>
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="brand-mark">
+        <span class="brand-badge">P</span>
+        <span>Pamoja</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/events" class="nav-link <%= currentPath.startsWith('/events') ? 'active' : '' %>">Events</a>
+        <a href="/accommodation" class="nav-link <%= currentPath.startsWith('/accommodation') ? 'active' : '' %>">Stays</a>
+        <a href="/transport" class="nav-link <%= currentPath.startsWith('/transport') && !currentPath.startsWith('/transport/driver') ? 'active' : '' %>">Transport</a>
+        <a href="/transport/driver" class="nav-link <%= currentPath.startsWith('/transport/driver') ? 'active' : '' %>">Driver Hub</a>
+        <a href="/tourism" class="nav-link <%= currentPath.startsWith('/tourism') ? 'active' : '' %>">Tourism</a>
+        <a href="/wallet" class="nav-link <%= currentPath.startsWith('/wallet') ? 'active' : '' %>">Wallet</a>
+      </nav>
+      <div class="nav-actions">
+        <% if (currentUser) { %>
+          <a href="/user/dashboard" class="btn btn-accent">
+            <i class="fa-solid fa-grid-2"></i> <%= currentUser.fullName.split(' ')[0] %>
+          </a>
+          <form action="/auth/logout" method="post" style="margin:0;">
+            <button type="submit" class="btn btn-ghost-light">Sign Out</button>
+          </form>
+        <% } else { %>
+          <a href="/user/dashboard" class="btn btn-ghost-light">Dashboard</a>
+          <a href="/auth/login" class="btn btn-accent">Sign In</a>
+        <% } %>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+    <% if (flash) { %>
+      <div class="flash <%= flashType === 'error' ? 'error' : 'success' %>">
+        <i class="fa-solid <%= flashType === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check' %>"></i>
+        <span><%= flash %></span>
+      </div>
+    <% } %>

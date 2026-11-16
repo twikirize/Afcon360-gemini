@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pamoja — User App</title>
+  <meta name="description" content="Pamoja customer mobile app for East Africa events, verified stays, airport rides, tourism discovery, and mobile wallet.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/mobile-studio.css">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="breadcrumb" id="appBreadcrumb" aria-label="Breadcrumb">
+      <a href="/" class="brand-wordmark" onclick="event.preventDefault(); switchTab('home');">Pamoja</a>
+      <span class="crumb-sep" aria-hidden="true">/</span>
+      <button type="button" class="crumb-menu-trigger" onclick="toggleBreadcrumbMenu(event)">
+        <span>Home</span>
+        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+      </button>
+    </nav>
+    <button
+      type="button"
+      class="menu-toggle-btn"
+      id="breadcrumbMenuBtn"
+      aria-expanded="false"
+      aria-controls="breadcrumbMenuDropdown"
+      onclick="toggleBreadcrumbMenu(event)"
+    >
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      <span>Menu</span>
+    </button>
+  </header>
+
+  <div class="crumb-dropdown" id="breadcrumbMenuDropdown" role="menu" aria-label="App navigation menu">
+    <button type="button" class="crumb-dropdown-item active" data-crumb-tab="home" onclick="selectBreadcrumbTab('home')"><i class="fa-solid fa-house"></i><span>Home</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="events" onclick="selectBreadcrumbTab('events')"><i class="fa-solid fa-ticket"></i><span>Events &amp; Tickets</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="adventure" onclick="selectBreadcrumbTab('adventure')"><i class="fa-solid fa-compass"></i><span>Adventure</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="stays" onclick="selectBreadcrumbTab('stays')"><i class="fa-solid fa-bed"></i><span>Stays</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="rides" onclick="selectBreadcrumbTab('rides')"><i class="fa-solid fa-car"></i><span>Rides</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="wallet" onclick="selectBreadcrumbTab('wallet')"><i class="fa-solid fa-wallet"></i><span>Wallet</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="account" onclick="selectBreadcrumbTab('account')"><i class="fa-solid fa-user"></i><span>Account</span></button>
+    <button type="button" class="crumb-dropdown-item" data-crumb-tab="about" onclick="selectBreadcrumbTab('about')"><i class="fa-solid fa-circle-info"></i><span>About</span></button>
+    <div class="crumb-dropdown-divider" role="separator"></div>
+    <a href="/get-app" class="crumb-dropdown-item"><i class="fa-solid fa-mobile-screen-button"></i><span>Get Mobile App</span></a>
+  </div>
+
+  <main class="workspace">
+    <section class="device-column" aria-label="Pamoja App">
+      <div class="phone-shell" id="phoneShell">
+        <div class="phone-header">
+          <span class="phone-header-title" id="phoneHeaderTitle">Pamoja</span>
+          <span class="phone-header-meta" id="phoneHeaderMeta">East Africa</span>
+        </div>
+
+        <div class="phone-body" id="phoneBody"></div>
+
+        <nav class="phone-tabbar" aria-label="Mobile tabs">
+          <button type="button" class="tab-btn active" data-tab="home"><i class="fa-solid fa-house"></i><span>Home</span></button>
+          <button type="button" class="tab-btn" data-tab="events"><i class="fa-solid fa-ticket"></i><span>Events</span></button>
+          <button type="button" class="tab-btn" data-tab="stays"><i class="fa-solid fa-bed"></i><span>Stays</span></button>
+          <button type="button" class="tab-btn" data-tab="rides"><i class="fa-solid fa-car"></i><span>Rides</span></button>
+          <button type="button" class="tab-btn" data-tab="wallet"><i class="fa-solid fa-wallet"></i><span>Wallet</span></button>
+          <button type="button" class="tab-btn" data-tab="account"><i class="fa-solid fa-user"></i><span>Account</span></button>
+          <button type="button" class="tab-btn" data-tab="about"><i class="fa-solid fa-circle-info"></i><span>About</span></button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="desktop-companion-col" aria-label="Pamoja Home">
+      <div class="pj-hero-stage desktop">
+        <div class="pj-hero-card desktop">
+          <div class="pj-hero-copy">
+            <div>
+              <div class="pj-hero-eyebrow">East Africa Companion</div>
+              <h1 class="pj-hero-title">Your world,<br><em>together.</em></h1>
+            </div>
+            <p class="pj-hero-sub">Events, stays, rides &amp; passes in one calm place.</p>
+          </div>
+          <div class="pj-hero-art" aria-hidden="true">
+            <svg viewBox="0 0 260 185" width="256" height="182" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="deskSunHalo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96 34) rotate(90) scale(48)">
+                  <stop stop-color="#FCEEE2" stop-opacity="0.95"/>
+                  <stop offset="0.55" stop-color="#F5B700" stop-opacity="0.28"/>
+                  <stop offset="1" stop-color="#F5B700" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="deskHillBack" x1="20" y1="90" x2="250" y2="150" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#9FC8AC"/>
+                  <stop offset="1" stop-color="#6FA784"/>
+                </linearGradient>
+                <linearGradient id="deskHillFront" x1="12" y1="120" x2="255" y2="180" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#3F7E59"/>
+                  <stop offset="1" stop-color="#1E5B39"/>
+                </linearGradient>
+              </defs>
+              <circle cx="96" cy="34" r="46" fill="url(#deskSunHalo)"/>
+              <circle cx="96" cy="34" r="9.5" fill="#EA8426"/>
+              <path d="M18 142C52 110 88 98 124 102C162 106 196 86 254 114V152H18V142Z" fill="url(#deskHillBack)" opacity="0.55"/>
+              <rect x="114" y="48" width="14" height="68" rx="2.5" fill="#79AE8C"/>
+              <rect x="118" y="56" width="3" height="8" rx="1" fill="#E3F0E7" opacity="0.7"/>
+              <rect x="132" y="30" width="18" height="86" rx="2.5" fill="#5D9A74"/>
+              <rect x="137" y="40" width="3.5" height="10" rx="1" fill="#E3F0E7" opacity="0.7"/>
+              <rect x="143" y="40" width="3.5" height="10" rx="1" fill="#E3F0E7" opacity="0.7"/>
+              <rect x="154" y="54" width="13" height="62" rx="2.5" fill="#8CC09E"/>
+              <rect x="171" y="38" width="20" height="78" rx="2.5" fill="#498762"/>
+              <rect x="177" y="48" width="4" height="11" rx="1" fill="#FCEEE2" opacity="0.7"/>
+              <rect x="195" y="58" width="14" height="58" rx="2.5" fill="#75AC89"/>
+              <rect x="213" y="70" width="13" height="46" rx="2.5" fill="#9BC9AB"/>
+              <path d="M40 128V96M20 96C20 86 32 79 44 79C56 79 67 86 67 96H20Z" stroke="#427A58" stroke-width="4" stroke-linecap="round"/>
+              <path d="M20 96C20 86 32 79 44 79C56 79 67 86 67 96H20Z" fill="#57946E"/>
+              <path d="M12 162C46 122 92 114 138 122C184 130 218 108 256 132V185H12V162Z" fill="url(#deskHillFront)"/>
+              <circle cx="106" cy="108" r="19" fill="#231915"/>
+              <circle cx="107" cy="110" r="12.5" fill="#7B492D"/>
+              <path d="M84 185L90 138C92 127 102 122 112 123C122 124 129 131 131 142L136 185H84Z" fill="#DC721E"/>
+              <path d="M103 123L109 139L116 123" fill="#A94E0F"/>
+              <circle cx="164" cy="95" r="13.5" fill="#6F4026"/>
+              <path d="M150 92C151 82 159 77 167 78C174 79 179 85 178 93C173 88 164 87 150 92Z" fill="#1F1917"/>
+              <path d="M137 185L142 132C144 119 155 111 169 111C183 111 195 119 198 134L204 185H137Z" fill="#135231"/>
+              <path d="M157 113H179L173 185H161L157 113Z" fill="#F6F4EE"/>
+            </svg>
+          </div>
+          <div class="pj-hero-backdrop-hills" aria-hidden="true"></div>
+
+          <div class="pj-hero-search-layer desktop">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              type="search"
+              id="desktopSearchInput"
+              placeholder="Search transport, stays, events, adventure..."
+              oninput="updateSearchQuery(this.value)"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();commitSearch();}"
+            >
+            <button type="button" class="pj-search-clear" id="desktopSearchClear" style="display:none;" aria-label="Clear search" onclick="updateSearchQuery('')">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+            <button type="button" class="pj-hero-search-pill-btn" onclick="commitSearch()">Search</button>
+          </div>
+        </div>
+
+        <div class="pj-floating-results desktop" id="desktopSearchResults" style="display:none;"></div>
+      </div>
+
+      <h2 class="pj-section-title" style="font-size:1.34rem; margin-bottom:14px;">Make yourself <em>feel at home</em></h2>
+
+      <div class="pj-grid-2x2 desktop">
+        <button type="button" class="pj-service-card" onclick="switchTab('rides')">
+          <div class="pj-service-top">
+            <span class="pj-service-icon mint"><i class="fa-solid fa-bus"></i></span>
+            <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+          <div>
+            <div class="pj-service-name">Transport</div>
+            <div class="pj-service-desc">Find your ride</div>
+          </div>
+        </button>
+
+        <button type="button" class="pj-service-card" onclick="switchTab('stays')">
+          <div class="pj-service-top">
+            <span class="pj-service-icon peach"><i class="fa-solid fa-bed"></i></span>
+            <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+          <div>
+            <div class="pj-service-name">Stays</div>
+            <div class="pj-service-desc">Find a place to stay</div>
+          </div>
+        </button>
+
+        <button type="button" class="pj-service-card" onclick="switchTab('events')">
+          <div class="pj-service-top">
+            <span class="pj-service-icon peach"><i class="fa-regular fa-calendar"></i></span>
+            <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+          <div>
+            <div class="pj-service-name">Events &amp; Tickets</div>
+            <div class="pj-service-desc">Events &amp; QR passes</div>
+          </div>
+        </button>
+
+        <button type="button" class="pj-service-card" onclick="switchTab('adventure')">
+          <div class="pj-service-top">
+            <span class="pj-service-icon mint"><i class="fa-solid fa-compass"></i></span>
+            <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+          <div>
+            <div class="pj-service-name">Adventure</div>
+            <div class="pj-service-desc">Organise &amp; join tours</div>
+          </div>
+        </button>
+      </div>
+
+      <button type="button" class="pj-wallet-banner" onclick="switchTab('wallet')">
+        <div class="pj-wallet-left">
+          <span class="pj-wallet-icon-box"><i class="fa-solid fa-wallet"></i></span>
+          <div>
+            <div class="pj-wallet-title">Your Pamoja wallet</div>
+            <div class="pj-wallet-sub">Payments, all in one place</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      </button>
+
+      <button type="button" class="pj-bookings-card" onclick="switchTab('stays')">
+        <div class="pj-bookings-left">
+          <span class="pj-service-icon mint"><i class="fa-regular fa-calendar-check"></i></span>
+          <div>
+            <div class="pj-service-name">My bookings</div>
+            <div class="pj-service-desc">Manage your stays and rides</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right" style="color:var(--muted);" aria-hidden="true"></i>
+      </button>
+
+      <div class="m-card" id="myEventsPanel" style="margin-top:16px;">
+        <div class="home-section-head">
+          <h2>My Passes</h2>
+          <button type="button" class="m-btn m-btn-outline" style="min-height:36px; padding:0 12px;" onclick="switchTab('events')">All Events</button>
+        </div>
+        <div id="desktopMyEvents">Loading passes...</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const IMAGES = {
+      hero: '/src/assets/images/hero_east_africa_1794835519725.jpg',
+      event: '/src/assets/images/event_stadium_pass_1794835521456.jpg',
+      stay: '/src/assets/images/stay_kampala_villa_1794835521524.jpg',
+      transport: '/src/assets/images/ride_airport_suv_1794835520377.jpg',
+      tourism: '/src/assets/images/hero_east_africa_1794835519725.jpg',
+    };
+
+    const appState = {
+      os: 'ios',
+      tab: 'home',
+      token: null,
+      user: null,
+      toast: '',
+      query: '',
+      searchScope: 'all',
+      recentSearches: ['Kampala', 'Entebbe', 'VIP Pass'],
+      feed: [],
+      events: [],
+      selectedEvent: null,
+      selectedRegistration: null,
+      registrations: [],
+      properties: [],
+      routes: [],
+      rides: [],
+      tourism: [],
+      tourBookings: [],
+      adventureMode: 'join',
+      adventureQuery: '',
+      wallet: null,
+      transactions: [],
+      healthStatus: 'Tap Ping to test /api/health/ping',
+    };
+
+    function escapeHtml(val) {
+      return String(val ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function imageForType(type) {
+      return IMAGES[type] || IMAGES.event;
+    }
+
+    function authHeaders() {
+      const h = { 'Content-Type': 'application/json' };
+      if (appState.token) h['Authorization'] = 'Bearer ' + appState.token;
+      return h;
+    }
+
+    async function api(url, opts) {
+      const r = await fetch(url, { ...(opts || {}), headers: { ...authHeaders(), ...(opts && opts.headers || {}) } });
+      return r.json();
+    }
+
+    function setToast(msg) {
+      appState.toast = msg;
+      renderAll();
+      setTimeout(() => {
+        if (appState.toast === msg) {
+          appState.toast = '';
+          renderAll();
+        }
+      }, 3500);
+    }
+
+    function buildQrSvg(refCode) {
+      const seed = Array.from(String(refCode || 'PAMOJA')).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+      let rects = '';
+      for (let row = 0; row < 7; row++) {
+        for (let col = 0; col < 7; col++) {
+          const corner = (row < 2 && col < 2) || (row < 2 && col > 4) || (row > 4 && col < 2);
+          const bit = corner || ((seed + row * 11 + col * 7) % 3 === 0);
+          if (bit) {
+            rects += `<rect x="${col * 14 + 4}" y="${row * 14 + 4}" width="11" height="11" rx="2" fill="#163321" />`;
+          }
+        }
+      }
+      return `<svg class="qr-code-svg" viewBox="0 0 106 106" role="img" aria-label="Ticket QR code">${rects}</svg>`;
+    }
+
+    async function loadData() {
+      const [feedRes, evtRes, propRes, trnRes, tourRes, wltRes, summaryRes] = await Promise.all([
+        api('/api/home/feed?per_page=20'),
+        api('/api/events'),
+        api('/api/accommodation/properties'),
+        api('/api/transport/routes'),
+        api('/api/tourism').catch(() => ({ listings: [] })),
+        api('/api/wallet'),
+        api('/api/user/summary').catch(() => ({ user: null, registrations: [] })),
+      ]);
+      appState.feed = feedRes.items || [];
+      appState.events = evtRes.events || [];
+      appState.properties = propRes.properties || [];
+      appState.routes = trnRes.routes || [];
+      appState.rides = trnRes.activeRequests || [];
+      appState.tourism = tourRes.listings || [];
+      appState.tourBookings = tourRes.bookings || summaryRes.tours || [];
+      appState.wallet = wltRes.account || null;
+      appState.transactions = wltRes.transactions || [];
+      appState.user = summaryRes.user || null;
+      appState.registrations = summaryRes.registrations || [];
+      renderAll();
+    }
+
+    function buildSearchCatalogue() {
+      const catalogue = [];
+
+      appState.routes.forEach((r) => {
+        catalogue.push({
+          scope: 'transport',
+          categoryLabel: 'Transport',
+          title: `${r.origin} -> ${r.destination}`,
+          meta: `${r.city} · ${r.vehicleClass} · ${r.currency} ${Number(r.baseFare).toLocaleString()}`,
+          keywords: `transport ride shuttle bus airport transfer ${r.code} ${r.city} ${r.origin} ${r.destination} ${r.vehicleClass}`,
+          action: () => switchTab('rides'),
+        });
+      });
+
+      appState.rides.forEach((ride) => {
+        catalogue.push({
+          scope: 'transport',
+          categoryLabel: 'Active Ride',
+          title: `${ride.pickup} -> ${ride.dropoff}`,
+          meta: `${ride.ref} · ${ride.status} · ${ride.currency} ${Number(ride.estimatedFare).toLocaleString()}`,
+          keywords: `transport ride cab car driver ${ride.ref} ${ride.pickup} ${ride.dropoff} ${ride.serviceType} ${ride.driverName}`,
+          action: () => switchTab('rides'),
+        });
+      });
+
+      appState.properties.forEach((p) => {
+        catalogue.push({
+          scope: 'stays',
+          categoryLabel: 'Accommodation',
+          title: p.name,
+          meta: `${p.city}, ${p.country} · ${p.currency} ${Number(p.pricePerNight).toLocaleString()} / night`,
+          keywords: `stays accommodation hotel apartment lodge riad room sleep ${p.city} ${p.country} ${p.propertyType} ${(p.amenities || []).join(' ')} ${p.description}`,
+          action: () => switchTab('stays'),
+        });
+      });
+
+      appState.events.forEach((ev) => {
+        const tierNames = (ev.ticketTypes || []).map((t) => t.name).join(' ');
+        const leadTier = ev.ticketTypes && ev.ticketTypes[0];
+        const priceMeta = leadTier ? `From ${leadTier.currency} ${Number(leadTier.price).toLocaleString()}` : ev.category;
+        catalogue.push({
+          scope: 'events',
+          categoryLabel: 'Event',
+          title: ev.name,
+          meta: `${ev.city} · ${ev.startDate} · ${priceMeta}`,
+          keywords: `events festival marathon conference concert match ${ev.city} ${ev.country} ${ev.venue} ${ev.category} ${ev.organizer} ${tierNames} ${ev.description}`,
+          action: () => openEventDetail(ev.slug),
+        });
+      });
+
+      appState.registrations.forEach((reg) => {
+        catalogue.push({
+          scope: 'events',
+          categoryLabel: 'My Ticket',
+          title: `${reg.eventName} (${reg.ticketTypeName})`,
+          meta: `Pass ${reg.ref} · QR Entry Ready`,
+          keywords: `ticket tickets pass passes qr badge registration ${reg.ref} ${reg.eventName} ${reg.ticketTypeName} ${reg.attendeeName}`,
+          action: () => openRegistrationTicket(reg.ref),
+        });
+      });
+
+      appState.tourism.forEach((t) => {
+        catalogue.push({
+          scope: 'adventure',
+          categoryLabel: 'Adventure Tour',
+          title: t.title,
+          meta: `${t.region}, ${t.country} · ${t.operatorName || 'Verified Operator'} · ${t.currency} ${Number(t.price).toLocaleString()}`,
+          keywords: `tourism adventure safari tour operator join organise guide wildlife nature ${t.region} ${t.country} ${t.category} ${t.operatorName || ''} ${t.meetingPoint || ''} ${t.summary}`,
+          action: () => switchTab('adventure'),
+        });
+      });
+
+      if (appState.wallet) {
+        catalogue.push({
+          scope: 'wallet',
+          categoryLabel: 'Wallet',
+          title: 'Your Pamoja Wallet',
+          meta: `${appState.wallet.currency} ${Number(appState.wallet.balance).toLocaleString()} · Mobile Money & Payments`,
+          keywords: 'wallet balance pay payment deposit top up money transfer ugx kes tzs',
+          action: () => switchTab('wallet'),
+        });
+      }
+
+      return catalogue;
+    }
+
+    function getSearchMatches() {
+      const q = appState.query.trim().toLowerCase();
+      const catalogue = buildSearchCatalogue();
+      if (!q && appState.searchScope === 'all') return [];
+      const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+      return catalogue.filter((item) => {
+        if (appState.searchScope !== 'all' && item.scope !== appState.searchScope) return false;
+        if (!tokens.length) return true;
+        const haystack = `${item.title} ${item.meta} ${item.categoryLabel} ${item.keywords}`.toLowerCase();
+        return tokens.every((tk) => haystack.includes(tk));
+      });
+    }
+
+    let currentSearchMatches = [];
+
+    window.setSearchScope = function(scope) {
+      appState.searchScope = scope;
+      updateSearchResultContainers();
+    };
+
+    window.selectSearchMatch = function(index) {
+      const item = currentSearchMatches[index];
+      if (item && typeof item.action === 'function') {
+        item.action();
+      }
+    };
+
+    function renderSearchResultsHtml(items) {
+      const q = appState.query.trim();
+      if (!q && appState.searchScope === 'all') return '';
+
+      const scopes = [
+        { id: 'all', label: 'All' },
+        { id: 'transport', label: 'Transport' },
+        { id: 'stays', label: 'Stays' },
+        { id: 'events', label: 'Events' },
+        { id: 'adventure', label: 'Adventure' },
+      ];
+
+      const tabsHtml = `
+        <div class="pj-search-tabs" role="tablist" aria-label="Search categories">
+          ${scopes
+            .map(
+              (s) =>
+                `<button type="button" class="pj-search-tab ${appState.searchScope === s.id ? 'active' : ''}" onclick="setSearchScope('${s.id}')">${s.label}</button>`
+            )
+            .join('')}
+        </div>
+      `;
+
+      if (!items.length) {
+        return (
+          tabsHtml +
+          `<div style="padding:10px 6px; font-size:0.82rem; color:var(--muted);">No matches found${q ? ` for "${escapeHtml(appState.query)}"` : ''}.</div>`
+        );
+      }
+
+      currentSearchMatches = items.slice(0, 8);
+      return (
+        tabsHtml +
+        currentSearchMatches
+          .map(
+            (item, idx) => `
+            <button type="button" class="pj-search-item" onclick="selectSearchMatch(${idx})">
+              <div style="min-width:0;">
+                <div style="font-weight:700; font-size:0.86rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.title)}</div>
+                <div style="font-size:0.74rem; color:var(--muted);">${escapeHtml(item.categoryLabel)} &middot; ${escapeHtml(item.meta)}</div>
+              </div>
+              <i class="fa-solid fa-chevron-right" style="color:var(--brand); font-size:0.78rem; flex-shrink:0;" aria-hidden="true"></i>
+            </button>
+          `
+          )
+          .join('')
+      );
+    }
+
+    function updateSearchResultContainers() {
+      const hasActiveSearch = appState.query.trim().length > 0 || appState.searchScope !== 'all';
+      const matches = getSearchMatches();
+      const resultsHtml = renderSearchResultsHtml(matches);
+
+      const phoneResults = document.getElementById('phoneSearchResults');
+      if (phoneResults) {
+        phoneResults.innerHTML = resultsHtml;
+        phoneResults.style.display = hasActiveSearch ? 'flex' : 'none';
+      }
+      const phoneClear = document.getElementById('phoneSearchClear');
+      if (phoneClear) {
+        phoneClear.style.display = hasActiveSearch ? 'inline-flex' : 'none';
+      }
+
+      const deskResults = document.getElementById('desktopSearchResults');
+      if (deskResults) {
+        deskResults.innerHTML = resultsHtml;
+        deskResults.style.display = hasActiveSearch ? 'flex' : 'none';
+      }
+      const deskClear = document.getElementById('desktopSearchClear');
+      if (deskClear) {
+        deskClear.style.display = hasActiveSearch ? 'inline-flex' : 'none';
+      }
+    }
+
+    window.updateSearchQuery = function(val) {
+      appState.query = val;
+      if (!val.trim() && appState.searchScope !== 'all') {
+        appState.searchScope = 'all';
+      }
+      const phoneSearch = document.getElementById('phoneSearchInput');
+      if (phoneSearch && phoneSearch.value !== val) phoneSearch.value = val;
+      const deskSearch = document.getElementById('desktopSearchInput');
+      if (deskSearch && deskSearch.value !== val) deskSearch.value = val;
+      updateSearchResultContainers();
+    };
+
+    window.commitSearch = function(term) {
+      const val = (typeof term === 'string' ? term : appState.query).trim();
+      if (!val) {
+        appState.searchScope = appState.searchScope === 'all' ? 'transport' : 'all';
+        updateSearchResultContainers();
+        return;
+      }
+      appState.query = val;
+      appState.recentSearches = [val, ...appState.recentSearches.filter((s) => s.toLowerCase() !== val.toLowerCase())].slice(0, 4);
+      const deskSearch = document.getElementById('desktopSearchInput');
+      if (deskSearch) deskSearch.value = val;
+      const phoneSearch = document.getElementById('phoneSearchInput');
+      if (phoneSearch) phoneSearch.value = val;
+      updateSearchResultContainers();
+    };
+
+    window.openRegistrationTicket = function(regRef) {
+      const reg = appState.registrations.find((r) => r.ref === regRef) || appState.registrations[0];
+      if (!reg) return;
+      appState.tab = 'events';
+      appState.selectedEvent = null;
+      appState.selectedRegistration = reg;
+      renderAll();
+    };
+
+    window.openTicketsShortcut = function() {
+      if (appState.registrations.length) {
+        openRegistrationTicket(appState.registrations[0].ref);
+      } else {
+        switchTab('events');
+      }
+    };
+
+    window.showHomeAlerts = function() {
+      if (appState.registrations.length) {
+        setToast(`Active pass: ${appState.registrations[0].eventName} (${appState.registrations[0].ref})`);
+      } else if (appState.user) {
+        setToast(`Signed in as ${appState.user.fullName}. All passes synced.`);
+      } else {
+        setToast('All events, stays and rides are up to date.');
+      }
+    };
+
+    window.openFeedDestination = function(type) {
+      if (type === 'stay') switchTab('stays');
+      else if (type === 'transport') switchTab('rides');
+      else if (type === 'tourism') switchTab('adventure');
+      else switchTab('events');
+    };
+
+    window.setOs = function(nextOs) {
+      appState.os = nextOs === 'android' ? 'android' : 'ios';
+      renderPhone();
+    };
+
+    window.pingBackendHealth = async function() {
+      try {
+        const res = await api('/api/health/ping');
+        appState.healthStatus = `Connected (${res.status || 'ok'})`;
+      } catch {
+        appState.healthStatus = 'Unable to reach /api/health/ping';
+      }
+      renderPhone();
+    };
+
+    function renderAll() {
+      renderPhone();
+      renderDesktopCompanion();
+    }
+
+    function renderDesktopCompanion() {
+      updateSearchResultContainers();
+
+      const myEventsEl = document.getElementById('desktopMyEvents');
+      if (myEventsEl) {
+        if (!appState.registrations.length) {
+          myEventsEl.innerHTML = `<div class="m-kicker" style="margin:0;">No passes yet · Book in Events for instant QR entry</div>`;
+        } else {
+          myEventsEl.innerHTML = appState.registrations
+            .map(
+              (reg) => `
+              <div class="m-row-between" style="padding:8px 0; border-bottom:1px solid var(--border);">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="m-pass-icon"><i class="fa-solid fa-ticket"></i></span>
+                  <div>
+                    <div style="font-weight:700; font-size:0.92rem;">${escapeHtml(reg.eventName)}</div>
+                    <div class="m-kicker" style="margin:0;">${escapeHtml(reg.ticketTypeName)} · ${escapeHtml(reg.ref)}</div>
+                  </div>
+                </div>
+                <button type="button" class="m-btn m-btn-outline" style="min-height:36px; padding:0 12px;" onclick="openRegistrationTicket('${escapeHtml(reg.ref)}')">
+                  <i class="fa-solid fa-qrcode"></i> QR Pass
+                </button>
+              </div>
+            `
+            )
+            .join('');
+        }
+      }
+    }
+
+    function renderPhone() {
+      const body = document.getElementById('phoneBody');
+      const titleEl = document.getElementById('phoneHeaderTitle');
+      const metaEl = document.getElementById('phoneHeaderMeta');
+      const shell = document.getElementById('phoneShell');
+
+      shell.className = 'phone-shell ' + appState.os + (appState.tab === 'home' ? ' home-mode' : '');
+      metaEl.textContent = appState.user?.country ? `${appState.user.country} · East Africa` : 'East Africa';
+
+      const titles = {
+        home: 'Pamoja',
+        events: appState.selectedRegistration ? 'QR Ticket Pass' : appState.selectedEvent ? 'Event Pass' : 'Events & Tickets',
+        adventure: 'Adventure & Tours',
+        stays: 'Stays',
+        rides: 'Rides',
+        wallet: 'Wallet',
+        account: 'Account',
+        about: 'About App',
+      };
+      titleEl.textContent = titles[appState.tab] || 'Pamoja';
+
+      const breadcrumbEl = document.getElementById('appBreadcrumb');
+      if (breadcrumbEl) {
+        const parts = ['<a href="/" class="brand-wordmark" onclick="event.preventDefault(); switchTab(\'home\');">Pamoja</a>'];
+        if (appState.tab === 'home') {
+          parts.push('<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-menu-trigger" onclick="toggleBreadcrumbMenu(event)"><span>Home</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>');
+        } else if (appState.tab === 'events' && appState.selectedRegistration) {
+          parts.push('<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-link" onclick="switchTab(\'events\')">Events &amp; Tickets</button>');
+          parts.push('<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-menu-trigger" onclick="toggleBreadcrumbMenu(event)"><span>QR Ticket Pass</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>');
+        } else if (appState.tab === 'events' && appState.selectedEvent) {
+          parts.push('<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-link" onclick="switchTab(\'events\')">Events &amp; Tickets</button>');
+          parts.push(`<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-menu-trigger" onclick="toggleBreadcrumbMenu(event)"><span>${escapeHtml(appState.selectedEvent.name)}</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>`);
+        } else {
+          const tabLabels = {
+            events: 'Events & Tickets',
+            adventure: 'Adventure',
+            stays: 'Stays',
+            rides: 'Rides',
+            wallet: 'Wallet',
+            account: 'Account',
+            about: 'About',
+          };
+          parts.push('<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-link" onclick="switchTab(\'home\')">Home</button>');
+          parts.push(`<span class="crumb-sep" aria-hidden="true">/</span><button type="button" class="crumb-menu-trigger" onclick="toggleBreadcrumbMenu(event)"><span>${escapeHtml(tabLabels[appState.tab] || 'Home')}</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>`);
+        }
+        breadcrumbEl.innerHTML = parts.join('');
+      }
+
+      document.querySelectorAll('.crumb-dropdown-item[data-crumb-tab]').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.crumbTab === appState.tab);
+      });
+
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.tab === appState.tab);
+      });
+
+      const toastHtml = appState.toast ? `<div class="toast">${escapeHtml(appState.toast)}</div>` : '';
+      const searchMatches = getSearchMatches();
+      const hasActiveSearch = appState.query.trim().length > 0 || appState.searchScope !== 'all';
+
+      if (appState.tab === 'home') {
+        body.innerHTML =
+          toastHtml +
+          `
+          <div class="pj-top-row">
+            <div class="pj-brand">
+              <span class="pj-emblem" aria-hidden="true">
+                <svg viewBox="0 0 36 36" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="18" cy="18" r="17" fill="#E5B223"/>
+                  <circle cx="18" cy="18" r="14" fill="#0E5B36"/>
+                  <path d="M18 8L26.5 24.5H22.2L18 16L13.8 24.5H9.5L18 8Z" fill="#FFFFFF"/>
+                  <path d="M18 17.5L21 24.5H15L18 17.5Z" fill="#E5B223"/>
+                </svg>
+              </span>
+              <span class="pj-brand-name">Pamoja</span>
+            </div>
+            <div class="pj-top-actions">
+              <button type="button" class="pj-circle-btn" aria-label="Notifications" onclick="showHomeAlerts()">
+                <i class="fa-regular fa-bell"></i>
+              </button>
+              <button type="button" class="pj-circle-btn mint" aria-label="Account" onclick="switchTab('account')">
+                <i class="fa-regular fa-user"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="pj-hero-stage">
+            <div class="pj-hero-card">
+              <div class="pj-hero-copy">
+                <div>
+                  <div class="pj-hero-eyebrow">East Africa</div>
+                  <h2 class="pj-hero-title">Your world,<br><em>together.</em></h2>
+                </div>
+                <p class="pj-hero-sub">One app. More to explore.</p>
+              </div>
+              <div class="pj-hero-art" aria-hidden="true">
+                <svg viewBox="0 0 186 140" width="170" height="128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="mobSunHalo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(62 24) rotate(90) scale(34)">
+                      <stop stop-color="#FCEEE2" stop-opacity="0.95"/>
+                      <stop offset="0.55" stop-color="#F5B700" stop-opacity="0.28"/>
+                      <stop offset="1" stop-color="#F5B700" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="mobHillBack" x1="16" y1="70" x2="180" y2="112" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#9FC8AC"/>
+                      <stop offset="1" stop-color="#6FA784"/>
+                    </linearGradient>
+                    <linearGradient id="mobHillFront" x1="8" y1="88" x2="184" y2="138" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#3F7E59"/>
+                      <stop offset="1" stop-color="#1E5B39"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="62" cy="24" r="32" fill="url(#mobSunHalo)"/>
+                  <circle cx="62" cy="24" r="6.5" fill="#EA8426"/>
+                  <path d="M16 106C38 82 62 74 86 76C112 78 138 64 182 82V112H16V106Z" fill="url(#mobHillBack)" opacity="0.55"/>
+                  <rect x="76" y="34" width="11" height="50" rx="2" fill="#79AE8C"/>
+                  <rect x="79" y="40" width="2.5" height="6" rx="0.8" fill="#E3F0E7" opacity="0.7"/>
+                  <rect x="90" y="21" width="13" height="63" rx="2" fill="#5D9A74"/>
+                  <rect x="93" y="29" width="2.5" height="7" rx="0.8" fill="#E3F0E7" opacity="0.7"/>
+                  <rect x="97" y="29" width="2.5" height="7" rx="0.8" fill="#E3F0E7" opacity="0.7"/>
+                  <rect x="106" y="38" width="10" height="46" rx="2" fill="#8CC09E"/>
+                  <rect x="119" y="27" width="14" height="57" rx="2" fill="#498762"/>
+                  <rect x="123" y="35" width="3" height="8" rx="0.8" fill="#FCEEE2" opacity="0.7"/>
+                  <rect x="137" y="42" width="10" height="42" rx="2" fill="#75AC89"/>
+                  <rect x="150" y="50" width="10" height="34" rx="2" fill="#9BC9AB"/>
+                  <path d="M26 96V72M13 72C13 65 21 60 29 60C37 60 45 65 45 72H13Z" stroke="#427A58" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M13 72C13 65 21 60 29 60C37 60 45 65 45 72H13Z" fill="#57946E"/>
+                  <path d="M6 122C30 92 64 86 98 92C132 98 158 82 186 100V140H6V122Z" fill="url(#mobHillFront)"/>
+                  <circle cx="77" cy="80" r="14" fill="#231915"/>
+                  <circle cx="78" cy="82" r="9.5" fill="#7B492D"/>
+                  <path d="M60 140L64 102C66 94 73 91 81 92C88 93 94 98 96 106L99 140H60Z" fill="#DC721E"/>
+                  <path d="M74 92L79 103L85 92" fill="#A94E0F"/>
+                  <circle cx="120" cy="70" r="10.5" fill="#6F4026"/>
+                  <path d="M109 68C110 61 116 57 123 58C128 59 131 63 130 69C127 65 120 64 109 68Z" fill="#1F1917"/>
+                  <path d="M99 140L103 98C105 88 113 83 123 83C134 83 143 88 145 100L149 140H99Z" fill="#135231"/>
+                  <path d="M114 84H131L126 140H117L114 84Z" fill="#F6F4EE"/>
+                </svg>
+              </div>
+              <div class="pj-hero-backdrop-hills" aria-hidden="true"></div>
+
+              <div class="pj-hero-search-layer">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input
+                  id="phoneSearchInput"
+                  type="search"
+                  value="${escapeHtml(appState.query)}"
+                  placeholder="Search transport, stays, adventure..."
+                  oninput="updateSearchQuery(this.value)"
+                  onkeydown="if(event.key==='Enter'){event.preventDefault();commitSearch();}"
+                >
+                <button type="button" class="pj-search-clear" id="phoneSearchClear" style="display:${hasActiveSearch ? 'inline-flex' : 'none'};" aria-label="Clear search" onclick="updateSearchQuery('')">
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="pj-floating-results" id="phoneSearchResults" style="display:${hasActiveSearch ? 'flex' : 'none'};">
+              ${renderSearchResultsHtml(searchMatches)}
+            </div>
+          </div>
+
+          <h3 class="pj-section-title">Make yourself <em>feel at home</em></h3>
+
+          <div class="pj-grid-2x2">
+            <button type="button" class="pj-service-card" onclick="switchTab('rides')">
+              <div class="pj-service-top">
+                <span class="pj-service-icon mint"><i class="fa-solid fa-bus"></i></span>
+                <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <div>
+                <div class="pj-service-name">Transport</div>
+                <div class="pj-service-desc">Find your ride</div>
+              </div>
+            </button>
+
+            <button type="button" class="pj-service-card" onclick="switchTab('stays')">
+              <div class="pj-service-top">
+                <span class="pj-service-icon peach"><i class="fa-solid fa-bed"></i></span>
+                <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <div>
+                <div class="pj-service-name">Stays</div>
+                <div class="pj-service-desc">Find a place to stay</div>
+              </div>
+            </button>
+
+            <button type="button" class="pj-service-card" onclick="switchTab('events')">
+              <div class="pj-service-top">
+                <span class="pj-service-icon peach"><i class="fa-regular fa-calendar"></i></span>
+                <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <div>
+                <div class="pj-service-name">Events &amp; Tickets</div>
+                <div class="pj-service-desc">Events &amp; QR passes</div>
+              </div>
+            </button>
+
+            <button type="button" class="pj-service-card" onclick="switchTab('adventure')">
+              <div class="pj-service-top">
+                <span class="pj-service-icon mint"><i class="fa-solid fa-compass"></i></span>
+                <span class="pj-service-arrow" aria-hidden="true">&#8599;</span>
+              </div>
+              <div>
+                <div class="pj-service-name">Adventure</div>
+                <div class="pj-service-desc">Organise &amp; join tours</div>
+              </div>
+            </button>
+          </div>
+
+          <button type="button" class="pj-wallet-banner" onclick="switchTab('wallet')">
+            <div class="pj-wallet-left">
+              <span class="pj-wallet-icon-box"><i class="fa-solid fa-wallet"></i></span>
+              <div>
+                <div class="pj-wallet-title">Your Pamoja wallet</div>
+                <div class="pj-wallet-sub">Payments, all in one place</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+
+          <button type="button" class="pj-bookings-card" onclick="switchTab('stays')">
+            <div class="pj-bookings-left">
+              <span class="pj-service-icon mint"><i class="fa-regular fa-calendar-check"></i></span>
+              <div>
+                <div class="pj-service-name">My bookings</div>
+                <div class="pj-service-desc">Manage your stays and rides</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color:var(--muted);" aria-hidden="true"></i>
+          </button>
+        `;
+      } else if (appState.tab === 'events') {
+        if (appState.selectedRegistration) {
+          const reg = appState.selectedRegistration;
+          body.innerHTML =
+            toastHtml +
+            `
+            <button class="m-btn m-btn-outline" style="margin-bottom:12px;" onclick="appState.selectedRegistration=null; renderAll();">← Back to Events</button>
+            <div class="m-card">
+              <div class="m-kicker">VERIFIED PASS · ${escapeHtml(reg.status.toUpperCase())}</div>
+              <h3>${escapeHtml(reg.eventName)}</h3>
+              <p>${escapeHtml(reg.ticketTypeName)} · Qty ${reg.quantity} · ${escapeHtml(reg.currency)} ${Number(reg.totalAmount).toLocaleString()}</p>
+              <div class="qr-ticket-box">
+                ${buildQrSvg(reg.ref)}
+                <div style="font-family:var(--font-mono); font-weight:700; color:var(--brand-dark);">${escapeHtml(reg.ref)}</div>
+                <div class="m-kicker" style="margin:0;">Attendee: ${escapeHtml(reg.attendeeName)}</div>
+              </div>
+            </div>
+          `;
+        } else if (appState.selectedEvent) {
+          const ev = appState.selectedEvent;
+          body.innerHTML =
+            toastHtml +
+            `
+            <button class="m-btn m-btn-outline" style="margin-bottom:12px;" onclick="appState.selectedEvent=null; renderAll();">← All Events</button>
+            <div class="m-card">
+              <div class="m-kicker">${escapeHtml(ev.category)} · ${escapeHtml(ev.city)}, ${escapeHtml(ev.country)}</div>
+              <h3>${escapeHtml(ev.name)}</h3>
+              <p>${escapeHtml(ev.description)}</p>
+              <div class="m-kicker">${escapeHtml(ev.startDate)} · ${escapeHtml(ev.venue)}</div>
+            </div>
+            ${ev.ticketTypes
+              .map(
+                (t) => `
+              <div class="m-card">
+                <div class="m-row-between">
+                  <div>
+                    <div style="font-weight:700;">${escapeHtml(t.name)}</div>
+                    <div class="m-kicker">${t.available} remaining</div>
+                  </div>
+                  <button class="m-btn" onclick="registerEvent('${escapeHtml(ev.slug)}', ${t.id})">${escapeHtml(t.currency)} ${t.price.toLocaleString()}</button>
+                </div>
+              </div>
+            `
+              )
+              .join('')}
+          `;
+        } else {
+          const passesCard = appState.registrations.length
+            ? `
+              <div class="m-card">
+                <div class="m-kicker">MY TICKETS &amp; QR PASSES (${appState.registrations.length})</div>
+                ${appState.registrations
+                  .map(
+                    (reg) => `
+                  <div class="m-row-between" style="padding:8px 0; border-bottom:1px solid var(--border);">
+                    <div style="min-width:0;">
+                      <div style="font-weight:700; font-size:0.88rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(reg.eventName)}</div>
+                      <div class="m-kicker" style="margin:0;">${escapeHtml(reg.ticketTypeName)} · ${escapeHtml(reg.ref)}</div>
+                    </div>
+                    <button type="button" class="m-btn m-btn-outline" style="min-height:36px; padding:0 12px;" onclick="openRegistrationTicket('${escapeHtml(reg.ref)}')">
+                      <i class="fa-solid fa-qrcode"></i> QR Pass
+                    </button>
+                  </div>
+                `
+                  )
+                  .join('')}
+              </div>
+            `
+            : '';
+
+          body.innerHTML =
+            toastHtml +
+            passesCard +
+            appState.events
+              .map(
+                (ev) => `
+            <div class="m-card">
+              <div class="m-kicker">${escapeHtml(ev.city)} · ${escapeHtml(ev.startDate)}</div>
+              <h3>${escapeHtml(ev.name)}</h3>
+              <div class="m-row-between">
+                <span class="m-price">From ${escapeHtml(ev.ticketTypes[0].currency)} ${ev.ticketTypes[0].price.toLocaleString()}</span>
+                <button class="m-btn" onclick="openEventDetail('${escapeHtml(ev.slug)}')">Select Pass</button>
+              </div>
+            </div>
+          `
+              )
+              .join('');
+        }
+      } else if (appState.tab === 'adventure') {
+        const modeBar = `
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px;">
+            <button type="button" class="m-btn m-btn-outline" style="min-height:36px; padding:0 12px;" onclick="switchTab('home')">← Home</button>
+            <div class="segmented" role="tablist" aria-label="Adventure view mode">
+              <button type="button" class="seg-btn ${appState.adventureMode === 'join' ? 'active' : ''}" onclick="setAdventureMode('join')">Find &amp; Join</button>
+              <button type="button" class="seg-btn ${appState.adventureMode === 'organise' ? 'active' : ''}" onclick="setAdventureMode('organise')">Organise Tour</button>
+            </div>
+          </div>
+        `;
+
+        if (appState.adventureMode === 'organise') {
+          body.innerHTML =
+            toastHtml +
+            modeBar +
+            `
+            <div class="m-card">
+              <div class="m-kicker">TOUR OPERATOR PORTAL</div>
+              <h3>Publish a Guided Tour</h3>
+              <p>Create a tour experience so travellers on Pamoja can discover and join your departure.</p>
+              <input class="m-input" id="advTitle" placeholder="Tour title (e.g. Jinja Nile Sunrise Kayaking)">
+              <input class="m-input" id="advRegion" placeholder="Region / City (e.g. Jinja)">
+              <input class="m-input" id="advCountry" value="Uganda" placeholder="Country">
+              <input class="m-input" id="advCategory" placeholder="Category (e.g. Water &amp; Wildlife)">
+              <input class="m-input" id="advOperator" value="${escapeHtml(appState.user?.fullName || 'Nile Crest Expeditions')}" placeholder="Tour Operator Name">
+              <input class="m-input" id="advMeetingPoint" placeholder="Meeting Point (e.g. Jinja Sailing Club Pier)">
+              <input class="m-input" id="advDeparture" value="2027-07-24 · 07:30" placeholder="Departure Date &amp; Time">
+              <input class="m-input" id="advDuration" value="Full Day (8 hrs)" placeholder="Duration">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <input class="m-input" id="advPrice" type="number" value="180000" placeholder="Price (UGX)">
+                <input class="m-input" id="advSpots" type="number" value="12" placeholder="Total Spots">
+              </div>
+              <input class="m-input" id="advSummary" placeholder="Highlights &amp; what guests should bring">
+              <button type="button" class="m-btn" style="width:100%;" onclick="organiseTour()">Publish Tour</button>
+            </div>
+          `;
+        } else {
+          body.innerHTML =
+            toastHtml +
+            modeBar +
+            `
+            <div class="m-search-wrap">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input
+                class="m-search-input"
+                id="adventureFilterInput"
+                type="search"
+                value="${escapeHtml(appState.adventureQuery)}"
+                placeholder="Filter tours by city, operator, wildlife..."
+                oninput="updateAdventureQuery(this.value)"
+              >
+            </div>
+            <div id="adventureFeedList">${renderAdventureListHtml()}</div>
+          `;
+        }
+      } else if (appState.tab === 'stays') {
+        body.innerHTML =
+          toastHtml +
+          appState.properties
+            .map(
+              (p) => `
+          <div class="m-card">
+            <div class="m-kicker">${escapeHtml(p.city)} · ★ ${p.rating} · ${p.availableRooms} left</div>
+            <h3>${escapeHtml(p.name)}</h3>
+            <div class="m-row-between">
+              <span class="m-price">${escapeHtml(p.currency)} ${p.pricePerNight.toLocaleString()} / night</span>
+              <button class="m-btn" ${p.availableRooms < 1 ? 'disabled' : ''} onclick="bookStay(${p.id})">${p.availableRooms < 1 ? 'Sold Out' : 'Book'}</button>
+            </div>
+          </div>
+        `
+            )
+            .join('');
+      } else if (appState.tab === 'rides') {
+        body.innerHTML =
+          toastHtml +
+          `
+          <div class="m-card">
+            <h3>Request Ride</h3>
+            <input class="m-input" id="mPickup" placeholder="Pickup (e.g. Entebbe Arrivals)">
+            <input class="m-input" id="mDropoff" placeholder="Dropoff (e.g. Kololo)">
+            <button class="m-btn" style="width:100%;" onclick="requestRide()">Request</button>
+          </div>
+          ${appState.rides
+            .map(
+              (r) => `
+            <div class="m-card">
+              <div class="m-kicker">${escapeHtml(r.ref)} · ${escapeHtml(r.status.toUpperCase())}</div>
+              <h3>${escapeHtml(r.pickup)} → ${escapeHtml(r.dropoff)}</h3>
+              <span class="m-price">${escapeHtml(r.currency)} ${r.estimatedFare.toLocaleString()}</span>
+            </div>
+          `
+            )
+            .join('')}
+          ${appState.routes
+            .map(
+              (r) => `
+            <div class="m-card">
+              <div class="m-kicker">${escapeHtml(r.city)} · ${escapeHtml(r.nextDeparture)}</div>
+              <h3>${escapeHtml(r.origin)} → ${escapeHtml(r.destination)}</h3>
+              <span class="m-price">${escapeHtml(r.currency)} ${r.baseFare.toLocaleString()} · ${r.estimatedMinutes} min</span>
+            </div>
+          `
+            )
+            .join('')}
+        `;
+      } else if (appState.tab === 'wallet') {
+        const w = appState.wallet;
+        body.innerHTML =
+          toastHtml +
+          `
+          <div class="m-hero">
+            <div style="font-size:0.75rem; opacity:0.85;">${w ? escapeHtml(w.accountName) : 'Pamoja Wallet'}</div>
+            <h2 style="font-size:1.65rem; color:var(--accent);">${w ? escapeHtml(w.currency) + ' ' + w.balance.toLocaleString() : '—'}</h2>
+          </div>
+          <div class="m-card">
+            <h3>Top Up</h3>
+            <input class="m-input" id="mTopUp" type="number" value="50000">
+            <button class="m-btn" style="width:100%;" onclick="depositWallet()">Add Funds</button>
+          </div>
+          ${appState.transactions
+            .map(
+              (tx) => `
+            <div class="m-card">
+              <div class="m-row-between">
+                <div>
+                  <div style="font-weight:700; font-size:0.88rem;">${escapeHtml(tx.sourceOrRecipient)}</div>
+                  <div class="m-kicker">${escapeHtml(tx.reference)}</div>
+                </div>
+                <span class="m-price" style="color:${tx.amount >= 0 ? 'var(--success)' : 'var(--danger)'}">${tx.amount >= 0 ? '+' : ''}${escapeHtml(tx.currency)} ${tx.amount.toLocaleString()}</span>
+              </div>
+            </div>
+          `
+            )
+            .join('')}
+        `;
+      } else if (appState.tab === 'account') {
+        const u = appState.user;
+        body.innerHTML =
+          toastHtml +
+          `
+          <div class="m-card">
+            <h3>${u ? escapeHtml(u.fullName) : 'Guest'}</h3>
+            <div class="m-kicker">${u ? escapeHtml(u.email) + ' · ' + escapeHtml(u.country) : 'Sign in to sync'}</div>
+          </div>
+          <div class="m-card">
+            <h3>Sign In</h3>
+            <input class="m-input" id="mEmail" value="amina@pamoja.space">
+            <input class="m-input" id="mPass" type="password" value="Pamoja2027!">
+            <button class="m-btn" style="width:100%;" onclick="mobileLogin()">Sign In</button>
+          </div>
+        `;
+      } else if (appState.tab === 'about') {
+        body.innerHTML =
+          toastHtml +
+          `
+          <div class="m-hero">
+            <div style="font-size:0.72rem; color:var(--accent); font-weight:700;">ARCHITECTURE</div>
+            <h2>Pamoja Mobile Stack</h2>
+            <p>Expo SDK 52 · React Navigation · Flask Bearer API</p>
+          </div>
+          <div class="m-card">
+            <div class="m-row-between">
+              <div>
+                <h3 style="margin-bottom:2px;">User App Preview</h3>
+                <div class="m-kicker" style="margin:0;">Switch device shell</div>
+              </div>
+              <div class="segmented" role="group" aria-label="Target OS shell">
+                <button type="button" class="seg-btn ${appState.os === 'ios' ? 'active' : ''}" onclick="setOs('ios')">iOS</button>
+                <button type="button" class="seg-btn ${appState.os === 'android' ? 'active' : ''}" onclick="setOs('android')">Android</button>
+              </div>
+            </div>
+          </div>
+          <div class="m-card">
+            <h3>Get Mobile App (iOS &amp; Android)</h3>
+            <div class="m-kicker">Download React Native source (.zip / .tar.gz), Expo Go setup &amp; EAS binaries.</div>
+            <a href="/get-app" class="m-btn" style="width:100%; margin-top:10px;">
+              <i class="fa-solid fa-mobile-screen-button"></i> Get Mobile App
+            </a>
+          </div>
+          <div class="m-card">
+            <h3>Expo &amp; SecureStore</h3>
+            <div class="m-kicker">Keychain/Keystore JWT persistence &amp; EAS iOS/Android builds.</div>
+          </div>
+          <div class="m-card">
+            <h3>React Navigation</h3>
+            <div class="m-kicker">7 top-level tabs + nested Events Native Stack.</div>
+          </div>
+          <div class="m-card">
+            <h3>Backend Health</h3>
+            <div class="m-kicker">${escapeHtml(appState.healthStatus)}</div>
+            <button class="m-btn m-btn-outline" style="width:100%; margin-top:8px;" onclick="pingBackendHealth()">Ping /api/health/ping</button>
+          </div>
+        `;
+      }
+    }
+
+    window.switchTab = function(tab) {
+      appState.tab = tab;
+      if (tab !== 'events') {
+        appState.selectedEvent = null;
+        appState.selectedRegistration = null;
+      }
+      renderAll();
+    };
+
+    window.openEventDetail = function(slug) {
+      appState.selectedRegistration = null;
+      appState.selectedEvent = appState.events.find((e) => e.slug === slug) || null;
+      renderAll();
+    };
+
+    window.registerEvent = async function(slug, ticketTypeId) {
+      const res = await api(`/api/events/${encodeURIComponent(slug)}/register`, {
+        method: 'POST',
+        body: JSON.stringify({ ticketTypeId, quantity: 1 }),
+      });
+      if (res.registration) {
+        await loadData();
+        appState.selectedEvent = null;
+        appState.selectedRegistration = res.registration;
+        setToast(`Ticket confirmed (${res.registration.ref})`);
+      }
+    };
+
+    window.bookStay = async function(propertyId) {
+      const res = await api('/api/accommodation/book', {
+        method: 'POST',
+        body: JSON.stringify({ propertyId, nights: 2, guests: 1 }),
+      });
+      if (res.booking) {
+        await loadData();
+        setToast(`Stay booked (${res.booking.ref})`);
+      }
+    };
+
+    window.requestRide = async function() {
+      const pickup = document.getElementById('mPickup').value.trim();
+      const dropoff = document.getElementById('mDropoff').value.trim();
+      if (!pickup || !dropoff) return;
+      const res = await api('/api/transport/ride-request', {
+        method: 'POST',
+        body: JSON.stringify({ pickup, dropoff, serviceType: 'standard' }),
+      });
+      if (res.ride) {
+        await loadData();
+        setToast(`Ride dispatched (${res.ride.ref})`);
+      }
+    };
+
+    window.depositWallet = async function() {
+      const amount = Number(document.getElementById('mTopUp').value);
+      if (!amount || amount <= 0) return;
+      const res = await api('/api/wallet/deposit', {
+        method: 'POST',
+        body: JSON.stringify({ amount, source: 'mobile_money' }),
+      });
+      if (res.transaction) {
+        await loadData();
+        setToast(`Added ${res.account.currency} ${amount.toLocaleString()}`);
+      }
+    };
+
+    function renderAdventureListHtml() {
+      const q = appState.adventureQuery.trim().toLowerCase();
+      const filteredTours = q
+        ? appState.tourism.filter((t) => {
+            const hay = `${t.title} ${t.region} ${t.country} ${t.category} ${t.operatorName || ''} ${t.meetingPoint || ''} ${t.summary}`.toLowerCase();
+            return hay.includes(q);
+          })
+        : appState.tourism;
+
+      const joinedHtml = appState.tourBookings.length
+        ? `
+          <div class="m-card" style="background:var(--surface-alt);">
+            <div class="m-kicker">MY JOINED TOURS (${appState.tourBookings.length})</div>
+            ${appState.tourBookings
+              .map(
+                (b) => `
+              <div style="padding:8px 0; border-bottom:1px solid var(--border);">
+                <div style="font-weight:700; font-size:0.88rem;">${escapeHtml(b.tourTitle)}</div>
+                <div class="m-kicker" style="margin:2px 0 0;">${escapeHtml(b.ref)} · ${escapeHtml(b.operatorName)} · Meet: ${escapeHtml(b.meetingPoint)} (${escapeHtml(b.departureDate)})</div>
+              </div>
+            `
+              )
+              .join('')}
+          </div>
+        `
+        : '';
+
+      const toursHtml = filteredTours.length
+        ? filteredTours
+            .map(
+              (t) => `
+            <div class="m-card">
+              <div class="m-kicker">${escapeHtml(t.category)} · ${escapeHtml(t.region)}, ${escapeHtml(t.country)} · ${escapeHtml(t.departureDate || t.duration)}</div>
+              <h3>${escapeHtml(t.title)}</h3>
+              <p>${escapeHtml(t.summary)}</p>
+              <div class="m-kicker" style="margin-bottom:10px;">Operator: ${escapeHtml(t.operatorName || 'Verified Pamoja Operator')} · Meet: ${escapeHtml(t.meetingPoint || t.region)} · ${t.spotsLeft ?? 0} spots left</div>
+              <div class="m-row-between">
+                <span class="m-price">${escapeHtml(t.currency)} ${Number(t.price).toLocaleString()}</span>
+                <button type="button" class="m-btn" ${(t.spotsLeft ?? 1) < 1 ? 'disabled' : ''} onclick="joinTour(${t.id})">${(t.spotsLeft ?? 1) < 1 ? 'Full' : 'Join Tour'}</button>
+              </div>
+            </div>
+          `
+            )
+            .join('')
+        : `<div class="m-card"><div class="m-kicker" style="margin:0;">No tours match "${escapeHtml(appState.adventureQuery)}". Switch to Organise Tour to post one.</div></div>`;
+
+      return joinedHtml + toursHtml;
+    }
+
+    window.setAdventureMode = function(mode) {
+      appState.adventureMode = mode === 'organise' ? 'organise' : 'join';
+      renderPhone();
+    };
+
+    window.updateAdventureQuery = function(val) {
+      appState.adventureQuery = val;
+      const listEl = document.getElementById('adventureFeedList');
+      if (listEl) listEl.innerHTML = renderAdventureListHtml();
+    };
+
+    window.joinTour = async function(tourId) {
+      const res = await api('/api/tourism/join', {
+        method: 'POST',
+        body: JSON.stringify({ tourId, guests: 1 }),
+      });
+      if (res.booking) {
+        await loadData();
+        setToast(`Joined tour (${res.booking.ref})`);
+      } else {
+        setToast(res.error || 'Unable to join tour');
+      }
+    };
+
+    window.organiseTour = async function() {
+      const title = document.getElementById('advTitle').value.trim();
+      const region = document.getElementById('advRegion').value.trim();
+      const country = document.getElementById('advCountry').value.trim() || 'Uganda';
+      const category = document.getElementById('advCategory').value.trim() || 'Guided Expedition';
+      const operatorName = document.getElementById('advOperator').value.trim() || 'Verified Pamoja Operator';
+      const meetingPoint = document.getElementById('advMeetingPoint').value.trim();
+      const departureDate = document.getElementById('advDeparture').value.trim() || '2027-07-24 · 07:30';
+      const duration = document.getElementById('advDuration').value.trim() || 'Half Day (5 hrs)';
+      const price = Number(document.getElementById('advPrice').value) || 150000;
+      const spotsTotal = Number(document.getElementById('advSpots').value) || 12;
+      const summary = document.getElementById('advSummary').value.trim();
+
+      if (!title || !region || !meetingPoint) {
+        setToast('Enter tour title, region & meeting point');
+        return;
+      }
+
+      const res = await api('/api/tourism/tours', {
+        method: 'POST',
+        body: JSON.stringify({
+          title,
+          region,
+          country,
+          category,
+          operatorName,
+          meetingPoint,
+          departureDate,
+          duration,
+          price,
+          spotsTotal,
+          summary,
+        }),
+      });
+
+      if (res.listing) {
+        appState.adventureMode = 'join';
+        await loadData();
+        setToast(`Tour published: ${res.listing.title}`);
+      } else {
+        setToast(res.error || 'Unable to publish tour');
+      }
+    };
+
+    window.mobileLogin = async function() {
+      const email = document.getElementById('mEmail').value.trim();
+      const password = document.getElementById('mPass').value;
+      const res = await api('/api/auth/mobile/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+      if (res.access_token) {
+        appState.token = res.access_token;
+        appState.user = res.user;
+        await loadData();
+        setToast(`Signed in as ${res.user.fullName}`);
+      } else {
+        setToast(res.error || 'Sign in failed');
+      }
+    };
+
+    window.toggleBreadcrumbMenu = function(evt) {
+      if (evt) evt.stopPropagation();
+      const menu = document.getElementById('breadcrumbMenuDropdown');
+      const btn = document.getElementById('breadcrumbMenuBtn');
+      if (!menu) return;
+      const isOpen = menu.classList.toggle('open');
+      if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    window.closeBreadcrumbMenu = function() {
+      const menu = document.getElementById('breadcrumbMenuDropdown');
+      const btn = document.getElementById('breadcrumbMenuBtn');
+      if (menu) menu.classList.remove('open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    };
+
+    window.selectBreadcrumbTab = function(tab) {
+      closeBreadcrumbMenu();
+      switchTab(tab);
+    };
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('breadcrumbMenuDropdown');
+      const btn = document.getElementById('breadcrumbMenuBtn');
+      if (!menu || !menu.classList.contains('open')) return;
+      if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
+        closeBreadcrumbMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeBreadcrumbMenu();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    loadData();
+  </script>
+</body>
+</html>

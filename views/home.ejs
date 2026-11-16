@@ -1,0 +1,91 @@
+<%- include('partials/header') %>
+
+<section class="pamoja-hero-section">
+  <div class="pamoja-hero-inner">
+    <span class="pamoja-hero-eyebrow">pamoja.space · Connected Multi-Domain Platform</span>
+    <h1>One Trusted Platform for Events, Stays, Rides &amp; Wallet</h1>
+    <p>
+      Discover upcoming conferences, festivals, and matchweek gatherings across East Africa —
+      and coordinate verified accommodation, airport transfers, local tours, and instant wallet payments in one place.
+    </p>
+    <div class="hero-actions">
+      <a href="/events" class="btn-hero-primary">
+        <i class="fa-solid fa-ticket"></i> Explore Featured Events
+      </a>
+      <a href="/accommodation" class="btn-hero-ghost">
+        <i class="fa-solid fa-bed"></i> Search Verified Stays
+      </a>
+    </div>
+
+    <div class="mobile-service-chips" aria-label="Quick service shortcuts">
+      <a href="/events" class="mobile-chip"><i class="fa-solid fa-calendar-check"></i> Events</a>
+      <a href="/accommodation" class="mobile-chip"><i class="fa-solid fa-hotel"></i> Stays</a>
+      <a href="/transport" class="mobile-chip"><i class="fa-solid fa-car"></i> Transport</a>
+      <a href="/tourism" class="mobile-chip"><i class="fa-solid fa-compass"></i> Tourism</a>
+      <a href="/wallet" class="mobile-chip"><i class="fa-solid fa-wallet"></i> Wallet</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="top-search" aria-label="Search Pamoja">
+    <form class="search-form" action="/" method="get">
+      <input
+        type="search"
+        name="q"
+        class="input"
+        value="<%= query %>"
+        placeholder="Search events, Kampala or Nairobi stays, airport shuttles, tours..."
+        aria-label="Search across Pamoja"
+      >
+      <select name="layout" class="select" style="width:auto;" aria-label="Feed layout">
+        <option value="mixed" <%= layout === 'mixed' ? 'selected' : '' %>>Mixed Feed</option>
+        <option value="sections" <%= layout === 'sections' ? 'selected' : '' %>>Grouped Sections</option>
+        <option value="tabbed" <%= layout === 'tabbed' ? 'selected' : '' %>>Compact Cards</option>
+      </select>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-magnifying-glass"></i> Search
+      </button>
+    </form>
+  </section>
+
+  <section style="margin-bottom: 32px;">
+    <div class="section-header">
+      <h2>Unified Platform Feed</h2>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <a href="/transport/driver" class="btn btn-outline"><i class="fa-solid fa-steering-wheel"></i> Driver Dashboard</a>
+        <a href="/user/dashboard" class="btn btn-primary"><i class="fa-solid fa-user-check"></i> My Bookings &amp; Wallet</a>
+      </div>
+    </div>
+
+    <% if (feedItems.length === 0) { %>
+      <div class="card">
+        <h3>No matching items</h3>
+        <p>Try clearing your search query or explore all events and stays.</p>
+        <div><a href="/" class="btn btn-outline">Reset Search</a></div>
+      </div>
+    <% } else { %>
+      <div class="grid-cards">
+        <% feedItems.forEach(function(item) { %>
+          <article class="card <%= item.is_pinned ? 'card-pinned' : '' %>">
+            <div class="card-meta">
+              <span class="tag <%= item.type === 'announcement' ? 'tag-gold' : '' %>"><%= item.badge %></span>
+              <span><%= item.type.toUpperCase() %></span>
+            </div>
+            <h3><%= item.title %></h3>
+            <p><%= item.subtitle %></p>
+            <div style="font-size:0.84rem; color: var(--text-muted);">
+              <i class="fa-solid fa-location-dot"></i> <%= item.location %>
+            </div>
+            <div class="card-footer">
+              <span class="price-text"><%= item.priceLabel %></span>
+              <a href="<%= item.url %>" class="btn btn-outline">Open <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

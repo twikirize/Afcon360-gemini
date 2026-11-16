@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<div class="container" style="max-width:860px;">
+  <section class="card">
+    <h1 style="margin:0 0 8px; font-family: var(--font-heading);"><%= heading %></h1>
+    <p style="font-size:1.05rem; margin-bottom:16px;"><%= lead %></p>
+    <% sections.forEach(function(sec) { %>
+      <div style="padding-top:14px; border-top:1px solid var(--border-light);">
+        <h3 style="margin:0 0 6px;"><%= sec.heading %></h3>
+        <p><%= sec.body %></p>
+      </div>
+    <% }); %>
+    <div style="margin-top:16px;">
+      <a href="<%= ctaHref %>" class="btn btn-primary"><%= ctaLabel %></a>
+    </div>
+  </section>
+</div>
+
+<%- include('partials/footer') %>
